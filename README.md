@@ -1,2 +1,3 @@
 # facebook-clone
-Clone of facebook.com using rails 5
+Clone of facebook.com
+
