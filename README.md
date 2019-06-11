@@ -16,6 +16,26 @@ Clone of facebook.com using rails 5
 
 ## Getting started
 
+Before cloning repo you should have Postgres installed. You can get various installation instructions [here]()
+
+Once you have PostgreSQL You must create a user with the same name of the app (fb-clone)
+
+1. First enter Postgres console
+	```
+	psql postgres
+	```
+
+2. Next create the database user with whichever password you would like
+	```
+	create role fb-clone with createdb login password 'password1';
+	```
+
+3. You should now see the user on your list of users. Enter `\du` to see the list. (Type `q` to come out of list)
+
+4. You can then come out of PostgreSQL console by typing `\q`
+
+---
+
 To get started with the app, clone the repo and then install the needed gems:
 
 ```
