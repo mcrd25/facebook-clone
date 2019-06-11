@@ -28,4 +28,4 @@
 
 .gitignore
 
-*/database.yml
+config/database.yml
