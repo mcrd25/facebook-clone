@@ -22,6 +22,7 @@
 #
 
 require 'rails_helper'
+require 'faker'
 
 RSpec.describe User, type: :model do
   let(:user) { User.new }
@@ -84,7 +85,40 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Basic validations' do
-
+    it 'is invalid without a first name' do 
+      user = User.new(first_name: nil)
+      user.valid?
+      expect(user.errors[:first_name]).to include("can't be blank")
+    end
+    
+    it 'is invalid without a last name' do 
+      user = User.new(last_name: nil)
+      user.valid?
+      expect(user.errors[:last_name]).to include("can't be blank")
+    end 
+    
+    it 'is invalid without an email' do 
+      user = User.new(email: nil)
+      user.valid?
+      expect(user.errors[:email]).to include("can't be blank")
+    end 
+    
+    it 'is invalid without a gender' do 
+      user = User.new(gender: nil)
+      user.valid?
+      expect(user.errors[:gender]).to include("can't be blank")
+    end 
+    
+    it 'is invalid without a birth date' do 
+      user = User.new(birth_date: nil)
+      user.valid?
+      expect(user.errors[:birth_date]).to include("can't be blank")
+    end 
+    
+    it 'is invalid without a password' do 
+      user = User.new(birth_date: nil)
+      user.valid?
+      expect(user.errors[:password]).to include("can't be blank")
+    end
   end
-
 end
