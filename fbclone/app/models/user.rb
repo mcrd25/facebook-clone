@@ -43,5 +43,10 @@ class User < ApplicationRecord
                         }
   validates :password, presence: true, 
                        length: { in: 6..20 }
+
+
+  def full_name
+  	"#{first_name} #{last_name}"
+  end
                                  
 end

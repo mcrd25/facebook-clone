@@ -26,6 +26,7 @@ require 'faker'
 
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.build(:user) }
+  let(:user2) { FactoryBot.build(:user) }
   
   describe 'test for presence of model attributes for' do
     describe 'general expected attributes' do 
@@ -132,6 +133,7 @@ RSpec.describe User, type: :model do
         expect(user.errors[:last_name]).to include("can't be blank")
       end
     end
+
     context 'email' do
       it 'is valid with an email' do 
         user.valid?
@@ -219,6 +221,14 @@ RSpec.describe User, type: :model do
         user.password = 'a' * 21
         user.valid?
         expect(user.errors[:password]).to include('is too long (maximum is 20 characters)')
+      end
+    end
+  end
+
+  describe 'public model functions' do
+    context 'full_name method' do
+      it 'returns full name via concatenation of first_name and last_name variables with space between' do
+        expect(user2.full_name).to eq("#{user2.first_name} #{user2.last_name}")
       end
     end
   end
