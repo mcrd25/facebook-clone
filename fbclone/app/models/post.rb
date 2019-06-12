@@ -14,4 +14,6 @@
 #
 
 class Post < ApplicationRecord
+	validates :message, presence: true, length: { maximum: 50000 }
+	validates :user_id, presence: true
 end
