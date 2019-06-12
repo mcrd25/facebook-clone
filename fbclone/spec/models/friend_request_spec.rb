@@ -18,10 +18,32 @@
 require 'rails_helper'
 
 RSpec.describe FriendRequest, type: :model do
-	let(:FriendRequest) { requester_id: 1, requestee_id: 2 }
+	let(:friend_request) { FactoryBot.build(:friend_request) }
+
   describe 'test for presense of model attributes' do
-  	it 'should include requester_id attribute' do
-  		expect(user.attributes).to include('first_name')
-  	end
+
+    context 'general expected attributes' do
+    	it 'should include requester_id attribute' do
+    		expect(friend_request.attributes).to include('requester_id')
+    	end
+
+      it 'should include requestee_id attribute' do
+        expect(friend_request.attributes).to include('requestee_id')
+      end
+    end
+
+    context 'Rails specific attributes' do
+      it 'should include the :created_at attribute' do 
+        expect(friend_request.attributes).to include('created_at')
+      end
+
+      it 'should include the :updated_at attribute' do 
+        expect(friend_request.attributes).to include('updated_at')
+      end
+
+      it 'should include the :id attribute' do 
+        expect(friend_request.attributes).to include('id')
+      end
+    end
   end
 end
