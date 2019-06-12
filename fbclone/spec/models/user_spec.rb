@@ -85,13 +85,47 @@ RSpec.describe User, type: :model do
 
   describe 'Basic validations' do
     context 'first_name' do
+      it 'is valid with a first name' do 
+        user.valid?
+        expect(user.errors[:first_name]).to_not include("can't be blank")
+      end
+
+      it 'is valid if length is less than 36 characters' do
+        user.valid?
+        expect(user.errors[:first_name]).to_not include('is too long (maximum is 35 characters)')
+      end
+
+      it 'is invalid if length is more than 35 characters' do
+        user.first_name = 'a' * 36
+        user.valid?
+        expect(user.errors[:first_name]).to include('is too long (maximum is 35 characters)')
+      end
+
       it 'is invalid without a first name' do 
         user.first_name = nil
         user.valid?
         expect(user.errors[:first_name]).to include("can't be blank")
       end
+
+
     end
     context 'last_name' do
+      it 'is valid with a last name' do 
+        user.valid?
+        expect(user.errors[:last_name]).to_not include("can't be blank")
+      end
+
+      it 'is valid if length is less than 36 characters' do
+        user.valid?
+        expect(user.errors[:last_name]).to_not include('is too long (maximum is 35 characters)')
+      end
+
+      it 'is invalid if length is more than 35 characters' do
+        user.last_name = 'a' * 36
+        user.valid?
+        expect(user.errors[:last_name]).to include('is too long (maximum is 35 characters)')
+      end
+
       it 'is invalid without a last name' do 
         user.last_name = nil
         user.valid?
@@ -99,6 +133,22 @@ RSpec.describe User, type: :model do
       end
     end
     context 'email' do
+      it 'is valid with an email' do 
+        user.valid?
+        expect(user.errors[:email]).to_not include("can't be blank")
+      end
+
+      it 'is valid if length is less than 36 characters' do
+        user.valid?
+        expect(user.errors[:email]).to_not include('is too long (maximum is 255 characters)')
+      end
+
+      it 'is invalid if length is more than 255 characters' do
+        user.email = 'a' * 255 + '@example.com'
+        user.valid?
+        expect(user.errors[:email]).to include('is too long (maximum is 255 characters)')
+      end
+
       it 'is invalid without an email' do 
         user.email = nil
         user.valid?
@@ -106,6 +156,22 @@ RSpec.describe User, type: :model do
       end 
     end
     context 'gender' do
+      it 'is valid with a gender' do 
+        user.valid?
+        expect(user.errors[:gender]).to_not include("can't be blank")
+      end 
+
+      it 'is valid if gender is male or female' do
+        user.valid?
+        expect(user.errors[:gender]).to_not include("#{user.gender} is not a valid gender")
+      end
+
+      it 'is invalid if gender is not male or female' do
+        user.gender = 'Maggot'
+        user.valid?
+        expect(user.errors[:gender]).to include("#{user.gender} is not a valid gender")
+      end
+
       it 'is invalid without a gender' do 
         user.gender = nil
         user.valid?
@@ -114,6 +180,11 @@ RSpec.describe User, type: :model do
     end
     
     context 'birth_date' do
+      it 'is valid with a birth date' do 
+        user.valid?
+        expect(user.errors[:birth_date]).to_not include("can't be blank")
+      end 
+
       it 'is invalid without a birth date' do 
         user.birth_date = nil
         user.valid?
@@ -122,6 +193,11 @@ RSpec.describe User, type: :model do
     end
     
     context 'password' do
+      it 'is valid with a password' do 
+        user.valid?
+        expect(user.errors[:password]).to_not include("can't be blank")
+      end
+
       it 'is invalid without a password' do 
         user.password = nil
         user.valid?

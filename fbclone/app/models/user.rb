@@ -24,7 +24,19 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  before_save { [email.downcase!, first_name.capitalize!, last_name.capitalize!] }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  validates :first_name, :last_name, :email, :gender, :birth_date, :password, presence: true
+  validates :first_name, presence: true, length: { maximum: 35 }
+  validates :last_name, presence: true, length: { maximum: 35 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  validates :email, presence: true,  length: { maximum: 255 }
+                    # format: { with: VALID_EMAIL_REGEX },
+                    # uniqueness: { case_sensitive: false }
+  validates :gender, presence: true, inclusion: { in: %w(Male Female),
+    message: "%{value} is not a valid gender" }
+  validates :birth_date, presence: true
+  validates :password, presence: true
+
+
 end
