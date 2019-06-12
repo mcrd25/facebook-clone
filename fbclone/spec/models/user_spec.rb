@@ -25,10 +25,9 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.new }
-
+  let(:user) { FactoryBot.build(:user) }
+  
   describe 'test for presence of model attributes for' do
-
     describe 'general expected attributes' do 
       it 'should include the :first_name attribute' do 
         expect(user.attributes).to include('first_name')
@@ -87,24 +86,28 @@ RSpec.describe User, type: :model do
   describe 'Basic validations' do
     context 'first_name' do
       it 'is invalid without a first name' do 
+        user.first_name = nil
         user.valid?
         expect(user.errors[:first_name]).to include("can't be blank")
       end
     end
     context 'last_name' do
       it 'is invalid without a last name' do 
+        user.last_name = nil
         user.valid?
         expect(user.errors[:last_name]).to include("can't be blank")
       end
     end
     context 'email' do
       it 'is invalid without an email' do 
+        user.email = nil
         user.valid?
         expect(user.errors[:email]).to include("can't be blank")
       end 
     end
     context 'gender' do
       it 'is invalid without a gender' do 
+        user.gender = nil
         user.valid?
         expect(user.errors[:gender]).to include("can't be blank")
       end 
@@ -112,6 +115,7 @@ RSpec.describe User, type: :model do
     
     context 'birth_date' do
       it 'is invalid without a birth date' do 
+        user.birth_date = nil
         user.valid?
         expect(user.errors[:birth_date]).to include("can't be blank")
       end 
@@ -119,6 +123,7 @@ RSpec.describe User, type: :model do
     
     context 'password' do
       it 'is invalid without a password' do 
+        user.password = nil
         user.valid?
         expect(user.errors[:password]).to include("can't be blank")
       end

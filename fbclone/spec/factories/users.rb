@@ -21,8 +21,15 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
+require 'faker'
+
 FactoryBot.define do
   factory :user do
-    
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    email { Faker::Internet.email }
+    password { 'test123' }
+    birth_date { Faker::Date.birthday }
+    gender { Faker::Gender.binary_type }
   end
 end
