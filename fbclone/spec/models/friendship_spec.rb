@@ -46,4 +46,32 @@ RSpec.describe Friendship, type: :model do
       end
     end
   end
+
+  describe 'Basic validations' do
+    context 'requester_id' do
+      it 'is valid with a requester_id' do 
+        friendship.valid?
+        expect(friendship.errors[:requester_id]).to_not include("can't be blank")
+      end
+
+      it 'is invalid without a user_id' do 
+        friendship.requester_id = nil
+        friendship.valid?
+        expect(friendship.errors[:requester_id]).to include("can't be blank")
+      end
+    end
+
+    context 'requestee_id' do
+      it 'is valid with a requestee_id' do 
+        friendship.valid?
+        expect(friendship.errors[:requestee_id]).to_not include("can't be blank")
+      end
+
+      it 'is invalid without a user_id' do 
+        friendship.requestee_id = nil
+        friendship.valid?
+        expect(friendship.errors[:requestee_id]).to include("can't be blank")
+      end
+    end
+   end
 end
