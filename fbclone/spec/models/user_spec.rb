@@ -138,9 +138,9 @@ RSpec.describe User, type: :model do
         expect(user.errors[:email]).to_not include("can't be blank")
       end
 
-      it 'is valid if length is less than 36 characters' do
+      it 'is valid if length is less than 3 characters' do
         user.valid?
-        expect(user.errors[:email]).to_not include('is too long (maximum is 255 characters)')
+        expect(user.errors[:email]).to_not include('is too short (minimum is 3 characters)')
       end
 
       it 'is invalid if length is more than 255 characters' do
@@ -190,6 +190,12 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors[:birth_date]).to include("can't be blank")
       end 
+
+      it 'is invalid with an invalid birth date format' do 
+        user.birth_date = '01-01-01'
+        user.valid?
+        expect(user.errors[:birth_date]).to include("#{user.birth_date} is not a valid date format of YYYY-MM-DD")
+      end
     end
     
     context 'password' do
@@ -202,6 +208,17 @@ RSpec.describe User, type: :model do
         user.password = nil
         user.valid?
         expect(user.errors[:password]).to include("can't be blank")
+      end
+
+      it 'is invalid if length is less than 6 characters' do
+        user.valid?
+        expect(user.errors[:password]).to_not include('is too short (minimum is 6 characters)')
+      end
+
+      it 'is invalid if length is more than 20 characters' do
+        user.password = 'a' * 21
+        user.valid?
+        expect(user.errors[:password]).to include('is too long (maximum is 20 characters)')
       end
     end
   end

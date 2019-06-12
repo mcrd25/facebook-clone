@@ -30,13 +30,18 @@ class User < ApplicationRecord
   validates :first_name, presence: true, length: { maximum: 35 }
   validates :last_name, presence: true, length: { maximum: 35 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  validates :email, presence: true,  length: { maximum: 255 }
+  validates :email, presence: true,  length: { in: 3..255 }
                     # format: { with: VALID_EMAIL_REGEX },
                     # uniqueness: { case_sensitive: false }
   validates :gender, presence: true, inclusion: { in: %w(Male Female),
     message: "%{value} is not a valid gender" }
-  validates :birth_date, presence: true
-  validates :password, presence: true
-
-
+  VALID_BIRTHDATE_REGEX = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+  validates :birth_date, presence: true, 
+                         format: { 
+                         with: VALID_BIRTHDATE_REGEX,  
+                         message: "%{value} is not a valid date format of YYYY-MM-DD" 
+                        }
+  validates :password, presence: true, 
+                       length: { in: 6..20 }
+                                 
 end
