@@ -71,14 +71,14 @@ RSpec.describe Post, type: :model do
 	 	context 'user_id' do
 	 		it 'is valid with a user_id' do 
         post.valid?
-        expect(post.errors[:user_id]).to_not include("can't be blank")
+        expect(post.errors[:post_id]).to_not include("can't be blank")
       end
 
       it 'is invalid without a user_id' do 
         post.user_id = nil
         post.valid?
-        expect(post.errors[:user_id]).to include("can't be blank")
+        expect(post.errors[:post_id]).to include("can't be blank")
       end
 	 	end
-	 end
+  end
 end
