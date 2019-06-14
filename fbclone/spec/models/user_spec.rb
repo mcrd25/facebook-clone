@@ -244,6 +244,15 @@ RSpec.describe User, type: :model do
         should have_many(:likes) 
       end
     end
+
+    context 'friend_requests' do 
+      it 'have many active_friend_requests' do 
+        should have_many(:active_friend_requests) 
+      end
+      it 'have many passive_friend_requests' do 
+        should have_many(:passive_friend_requests) 
+      end
+    end
   end
 
   describe 'public model functions' do

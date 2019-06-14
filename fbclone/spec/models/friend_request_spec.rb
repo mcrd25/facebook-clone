@@ -18,7 +18,7 @@
 require 'rails_helper'
 
 RSpec.describe FriendRequest, type: :model do
-	let(:friend_request) { FactoryBot.build(:friend_request) }
+	let(:friend_request) { FactoryBot.create(:friend_request) }
 
   describe 'test for presense of model attributes' do
 
@@ -73,5 +73,16 @@ RSpec.describe FriendRequest, type: :model do
         expect(friend_request.errors[:requestee_id]).to include("can't be blank")
       end
     end
-   end
+  end
+
+  describe 'Associations' do
+    context 'user' do 
+      it 'should belong to requestee' do 
+        should belong_to(:requestee) 
+      end 
+      it 'should belong to requester' do 
+        should belong_to(:requester) 
+      end 
+    end
+  end
 end

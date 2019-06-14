@@ -48,6 +48,9 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments
   has_many :likes
+
+  has_many :active_friend_requests, class_name: 'FriendRequest', foreign_key: 'requester_id'
+  has_many :passive_friend_requests, class_name: 'FriendRequest', foreign_key: 'requestee_id'
   def full_name
   	"#{first_name} #{last_name}"
   end
