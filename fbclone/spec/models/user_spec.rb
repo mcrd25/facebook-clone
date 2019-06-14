@@ -252,6 +252,63 @@ RSpec.describe User, type: :model do
       it 'have many passive_friend_requests' do 
         should have_many(:passive_friend_requests) 
       end
+
+      it 'has many sent_requests through active_friend_requests' do
+        should have_many(:sent_requests).through(:active_friend_requests).source(:requestee)
+      end
+      it 'has many sent_requests through active_friend_requests' do
+        should have_many(:received_requests).through(:passive_friend_requests).source(:requester)
+      end
+    end
+
+    context 'friendships' do 
+      it 'have many active_friendships' do 
+        should have_many(:active_friendships) 
+      end
+      it 'have many passive_friendships' do 
+        should have_many(:passive_friendships) 
+      end
+
+      it 'has many sent_requests through active_friend_requests' do
+        should have_many(:active_friends).through(:active_friendships).source(:requestee)
+      end
+      it 'has many sent_requests through active_friend_requests' do
+        should have_many(:passive_friends).through(:passive_friendships).source(:requester)
+      end
+    end
+  end
+
+  describe 'Dependents' do
+    context 'friend_requests' do
+      it 'should remove associated active_friend_requests when user is deleted' do
+        should have_many(:active_friend_requests).dependent(:destroy)
+      end
+      it 'should remove associated passive_friend_requests when user is deleted' do
+        should have_many(:passive_friend_requests).dependent(:destroy)
+      end
+    end
+    context 'friendships' do
+      it 'should remove associated active_friendships when user is deleted' do
+        should have_many(:active_friendships).dependent(:destroy)
+      end
+      it 'should remove associated passive_friendships when user is deleted' do
+        should have_many(:passive_friendships).dependent(:destroy)
+      end
+    end
+    context 'posts' do
+      it 'should remove associated posts when user is deleted' do
+        should have_many(:posts).dependent(:destroy)
+      end
+    end
+    context 'comments' do
+      it 'should remove associated comments when user is deleted' do
+        should have_many(:comments).dependent(:destroy)
+      end
+    end
+    context 'likes' do
+      it 'should remove associated likes when user is deleted' do
+        should have_many(:likes).dependent(:destroy)
+      end
     end
   end
 

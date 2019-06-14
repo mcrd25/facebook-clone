@@ -80,24 +80,36 @@ RSpec.describe Post, type: :model do
         expect(post.errors[:user_id]).to include("can't be blank")
       end
 	 	end
-
-    describe 'Associations' do 
-      context 'comments' do 
-        it 'has correct has_many association' do 
-          should have_many(:comments) 
-        end
-      end 
-
-      context 'likes' do
-        it 'has correct has_many association' do 
-          should have_many(:likes) 
-        end
+  end
+  describe 'Associations' do 
+    context 'comments' do 
+      it 'has correct has_many association' do 
+        should have_many(:comments) 
       end
+    end 
 
-      context 'user' do 
-        it 'has correct belongs_to association' do 
-          should belong_to(:user) 
-        end 
+    context 'likes' do
+      it 'has correct has_many association' do 
+        should have_many(:likes) 
+      end
+    end
+
+    context 'user' do 
+      it 'has correct belongs_to association' do 
+        should belong_to(:user) 
+      end 
+    end
+  end
+
+  describe 'Dependents' do
+    context 'comments' do
+      it 'should remove associated comments when post is deleted' do
+        should have_many(:comments).dependent(:destroy)
+      end
+    end
+    context 'likes' do
+      it 'should remove associated likes when post is deleted' do
+        should have_many(:likes).dependent(:destroy)
       end
     end
   end

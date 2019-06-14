@@ -17,6 +17,7 @@
 
 require 'rails_helper'
 
+
 RSpec.describe FriendRequest, type: :model do
 	let(:friend_request) { FactoryBot.create(:friend_request) }
 

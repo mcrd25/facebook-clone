@@ -16,10 +16,7 @@
 #
 
 FactoryBot.define do
-  factory :friend_request, aliases: [:active_friend_request, :passive_friend_request] do
-    # requester_id { 1 }
-    # requestee_id { 2 }
-
+  factory :friend_request do
     association :requester
     association :requestee
   end

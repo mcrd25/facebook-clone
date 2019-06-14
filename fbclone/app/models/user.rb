@@ -45,12 +45,36 @@ class User < ApplicationRecord
                        length: { in: 6..20 }
 
 
-  has_many :posts
-  has_many :comments
-  has_many :likes
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
-  has_many :active_friend_requests, class_name: 'FriendRequest', foreign_key: 'requester_id'
-  has_many :passive_friend_requests, class_name: 'FriendRequest', foreign_key: 'requestee_id'
+  has_many :active_friend_requests, class_name: 'FriendRequest',
+                                    foreign_key: 'requester_id',
+                                    dependent: :destroy
+  has_many :passive_friend_requests, class_name: 'FriendRequest',
+                                     foreign_key: 'requestee_id',
+                                     dependent: :destroy
+
+  has_many :sent_requests, through: :active_friend_requests,
+                                    source: :requestee
+  has_many :received_requests, through: :passive_friend_requests,
+                                        source: :requester
+
+  has_many :active_friendships, foreign_key: :requester_id,
+                                class_name: 'Friendship',
+                                dependent: :destroy
+  has_many :passive_friendships, foreign_key: :requestee_id, 
+                                 class_name: 'Friendship',
+                                 dependent: :destroy
+
+
+  has_many :active_friends, through: :active_friendships, 
+                            source: :requestee
+  has_many :passive_friends, through: :passive_friendships,
+                             source: :requester
+
+
   def full_name
   	"#{first_name} #{last_name}"
   end
