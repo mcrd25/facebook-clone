@@ -15,7 +15,8 @@
 
 FactoryBot.define do
   factory :post do
-    user_id { 1 }
+    #user_id { 1 }
     message { "MyText" }
+    association :user
   end
 end

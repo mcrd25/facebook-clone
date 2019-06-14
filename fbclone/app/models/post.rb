@@ -16,4 +16,8 @@
 class Post < ApplicationRecord
 	validates :message, presence: true, length: { maximum: 50000 }
 	validates :user_id, presence: true
+
+  belongs_to :user
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 end

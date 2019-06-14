@@ -15,10 +15,11 @@
 #  index_friendships_on_requester_id_and_requestee_id  (requester_id,requestee_id) UNIQUE
 #
 
+
 require 'rails_helper'
 
 RSpec.describe Friendship, type: :model do
-  let(:friendship) { FactoryBot.build(:friendship) }
+  let(:friendship) { FactoryBot.create(:friendship) }
 
   describe 'test for presense of model attributes' do
 
@@ -74,4 +75,15 @@ RSpec.describe Friendship, type: :model do
       end
     end
    end
+
+   describe 'Associations' do
+    context 'user' do 
+      it 'should belong to requestee' do 
+        should belong_to(:requestee) 
+      end 
+      it 'should belong to requester' do 
+        should belong_to(:requester) 
+      end 
+    end
+  end
 end

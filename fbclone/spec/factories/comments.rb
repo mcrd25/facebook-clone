@@ -17,8 +17,11 @@
 
 FactoryBot.define do
   factory :comment do
-    post_id { 1 }
-    user_id { 1 }
+    #post_id { 1 }
+    #user_id { 1 }
     message { "Lorem Ipsum Text" }
+
+    association :post 
+    association :user
   end
 end

@@ -18,7 +18,7 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:comment) { FactoryBot.build(:comment) }
+  let(:comment) { FactoryBot.create(:comment) }
   describe 'test for presence of model attributes' do
     context 'general expected attributes' do
       it 'should include post_id attribute' do
@@ -97,6 +97,21 @@ RSpec.describe Comment, type: :model do
         comment.post_id = nil
         comment.valid?
         expect(comment.errors[:post_id]).to include("can't be blank")
+      end
+    end
+  end
+
+  describe "Associations" do
+
+    context 'post' do 
+      it 'hast correct belongs_to association' do 
+        should belong_to(:post) 
+      end 
+    end
+
+    context 'user' do 
+      it 'has correct belongs_to association' do 
+        should belong_to(:user) 
       end
     end
   end
