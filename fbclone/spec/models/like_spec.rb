@@ -13,7 +13,7 @@ require 'rails_helper'
 
 RSpec.describe Like, type: :model do
   
-  let(:like) { FactoryBot.build(:like) }
+  let(:like) { FactoryBot.create(:like) }
   
   describe 'test for presence of model attributes' do
     context 'general expected attributes' do
@@ -65,6 +65,23 @@ RSpec.describe Like, type: :model do
         like.post_id = nil
         like.valid?
         expect(like.errors[:post_id]).to include("can't be blank")
+      end
+    end
+
+  end
+
+
+  describe "Associations" do
+
+    context 'post' do 
+      it 'hast correct belongs_to association' do 
+        should belong_to(:post) 
+      end 
+    end
+
+    context 'user' do 
+      it 'has correct belongs_to association' do 
+        should belong_to(:user) 
       end
     end
   end

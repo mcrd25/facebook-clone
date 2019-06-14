@@ -45,6 +45,9 @@ class User < ApplicationRecord
                        length: { in: 6..20 }
 
 
+  has_many :posts
+  has_many :comments
+  has_many :likes
   def full_name
   	"#{first_name} #{last_name}"
   end

@@ -225,6 +225,27 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "Associations" do
+
+    context 'posts' do 
+      it 'has correct has_many association' do 
+        should have_many(:posts) 
+      end
+    end
+
+    context 'comments' do 
+      it 'has correct has_many association' do 
+        should have_many(:comments) 
+      end
+    end
+
+    context 'likes' do 
+      it 'has correct has_many association' do 
+        should have_many(:likes) 
+      end
+    end
+  end
+
   describe 'public model functions' do
     context 'full_name method' do
       it 'returns full name via concatenation of first_name and last_name variables with space between' do
