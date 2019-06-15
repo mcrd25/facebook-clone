@@ -20,6 +20,10 @@ require 'rails_helper'
 
 RSpec.describe FriendRequest, type: :model do
 	let(:friend_request) { FactoryBot.create(:friend_request) }
+  
+  let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
+  let(:fr_with_ilegal_requester) { FriendRequest.new(requester_id: ilegal_user, requestee_id: User.first.id) }
+  let(:fr_with_ilegal_requestee) { FriendRequest.new(requester_id: User.first.id, requestee_id: ilegal_user) }
 
   describe 'test for presense of model attributes' do
 
@@ -85,5 +89,23 @@ RSpec.describe FriendRequest, type: :model do
         should belong_to(:requester) 
       end 
     end
+  end
+
+  describe ' Constraints' do 
+    context 'when friend_request is created with requester_id that does not exist' do 
+      it 'should raise user must exist error' do
+        expect { fr_with_ilegal_requester.save! }.to  raise_error(
+          ActiveRecord::RecordInvalid, 'Validation failed: Requester must exist'
+        )
+      end
+    end 
+
+    context 'when friend_request is created with requester_id that does not exist' do 
+      it 'should raise user must exist error' do
+        expect { fr_with_ilegal_requestee.save! }.to  raise_error(
+          ActiveRecord::RecordInvalid, 'Validation failed: Requestee must exist'
+        )
+      end
+    end 
   end
 end

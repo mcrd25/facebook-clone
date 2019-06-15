@@ -17,6 +17,10 @@ require 'rails_helper'
 
 RSpec.describe Post, type: :model do
 	let(:post) { FactoryBot.create(:post) }
+
+  let(:ilegal_id) { User.count.nil? ? 1 : User.count + 1 }
+  let(:ilegal_post) { Post.new(user_id: ilegal_id, message: "Hello World") }
+
 	describe 'test for presence of model attributes' do
 		context 'general expected attributes' do
 			it 'should include user_id attribute' do
@@ -112,5 +116,14 @@ RSpec.describe Post, type: :model do
         should have_many(:likes).dependent(:destroy)
       end
     end
+  end
+
+  describe 'Constraints' do 
+    context 'when post is created with user that does not exist' do 
+      it 'should raise user must exist error' do 
+        
+        expect { ilegal_post.save! }.to  raise_error(ActiveRecord::RecordInvalid, 'Validation failed: User must exist')
+      end 
+    end 
   end
 end
