@@ -19,4 +19,17 @@ require 'faker'
   )
 end
 
+
 puts 'Created 10 users!'
+
+NotificationType.create!(name: 'post_comment')
+NotificationType.create!(name: 'post_like')
+
+Post.create!(user_id: User.first.id, message: 'Testing posts')
+Post.create!(user_id: User.last.id, message: 'Testing posts 2')
+
+Comment.create!(user_id: User.last.id, post_id: Post.first.id, message: 'Another comment')
+Comment.create!(user_id: User.first.id, post_id: Post.last.id, message: 'Another comment')
+
+Like.create!(user_id: User.last.id, post_id: Post.first.id)
+Like.create!(user_id: User.first.id, post_id: Post.last.id)

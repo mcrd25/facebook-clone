@@ -15,8 +15,12 @@
 #
 
 FactoryBot.define do
-  factory :notification do
+	# factory :like
+	# factory :comment
 
+  factory :notification do
+  	for_like
+  	
     trait :for_like do 
       association :reference, factory: :like
     end

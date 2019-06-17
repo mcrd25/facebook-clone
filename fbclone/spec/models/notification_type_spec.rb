@@ -3,7 +3,7 @@
 # Table name: notification_types
 #
 #  id         :bigint           not null, primary key
-#  type       :string
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -15,8 +15,8 @@ RSpec.describe NotificationType, type: :model do
   
   describe 'test for presence of model attributes for' do
     describe 'general expected attributes' do 
-      it 'should include the :type attribute' do 
-        expect(notification_type.attributes).to include('type')
+      it 'should include the :name attribute' do 
+        expect(notification_type.attributes).to include('name')
       end
     end 
 
@@ -36,30 +36,30 @@ RSpec.describe NotificationType, type: :model do
   end
 
   describe 'Basic validations' do
-    context 'type' do 
-      it 'is valid with a type' do 
+    context 'name' do 
+      it 'is valid with a name' do 
         notification_type.valid?
-        expect(notification_type.errors[:type]).to_not include("can't be blank")
+        expect(notification_type.errors[:name]).to_not include("can't be blank")
       end
-      it 'is valid when type is post_comment or post_like' do
-      	notification_type.type = 'post_comment'
+      it 'is valid when name is post_comment or post_like' do
+      	notification_type.name = 'post_comment'
         notification_type.valid?
-        expect(notification_type.errors[:type]).to_not include("#{notification_type.type} is not a valid type")
-        notification_type.type = 'post_like'
+        expect(notification_type.errors[:name]).to_not include("#{notification_type.name} is not a valid name")
+        notification_type.name = 'post_like'
         notification_type.valid?
-        expect(notification_type.errors[:type]).to_not include("#{notification_type.type} is not a valid type")
+        expect(notification_type.errors[:name]).to_not include("#{notification_type.name} is not a valid name")
       end
 
-      it 'is invalid if type is not post_comment or post_like' do
-        notification_type.type = 'Maggot'
+      it 'is invalid if name is not post_comment or post_like' do
+        notification_type.name = 'Maggot'
         notification_type.valid?
-        expect(notification_type.errors[:type]).to include("#{notification_type.type} is not a valid type")
+        expect(notification_type.errors[:name]).to include("#{notification_type.name} is not a valid name")
       end
 
       it 'is invalid without a notification_type_id' do 
-        notification_type.type = nil
+        notification_type.name = nil
         notification_type.valid?
-        expect(notification_type.errors[:type]).to include("can't be blank")
+        expect(notification_type.errors[:name]).to include("can't be blank")
       end
 
       

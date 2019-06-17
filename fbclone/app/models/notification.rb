@@ -18,6 +18,7 @@ class Notification < ApplicationRecord
 	validates :notification_type_id, presence: true
   validates :reference_id, presence: true
 
-  belongs_to :notification_type
   belongs_to :reference, :polymorphic => true
+  belongs_to :notification_type
+  
 end

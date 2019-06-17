@@ -34,15 +34,15 @@ RSpec.describe Notification, type: :model do
 
     describe 'Rails specific attributes' do
       it 'should include the :created_at attribute' do 
-        expect(notification.attributes).to include('created_at')
+        expect(like_notification.attributes).to include('created_at')
       end
 
       it 'should include the :updated_at attribute' do 
-        expect(notification.attributes).to include('updated_at')
+        expect(like_notification.attributes).to include('updated_at')
       end
 
       it 'should include the :id attribute' do 
-        expect(notification.attributes).to include('id')
+        expect(like_notification.attributes).to include('id')
       end
     end
   end
@@ -57,20 +57,20 @@ RSpec.describe Notification, type: :model do
       it 'is invalid without a notification_type_id' do 
         notification.notification_type_id = nil
         notification.valid?
-        expect(notification.errors[:notification_type_id]).to include("can't be blank")
+        expect(like_notification.errors[:notification_type_id]).to include("can't be blank")
       end
     end
 
     context 'reference_id' do 
       it 'is valid with a reference_id' do 
         notification.valid?
-        expect(notification.errors[:reference_id]).to_not include("can't be blank")
+        expect(like_notification.errors[:reference_id]).to_not include("can't be blank")
       end
 
       it 'is invalid without a notification_type_id' do 
         notification.reference_id = nil
         notification.valid?
-        expect(notification.errors[:reference_id]).to include("can't be blank")
+        expect(like_notification.errors[:reference_id]).to include("can't be blank")
       end
     end
   end
@@ -83,16 +83,16 @@ RSpec.describe Notification, type: :model do
       end 
     end
 
-    context 'like' do 
-      it 'has correct has_many association' do 
-        should belong_to(:like) 
-      end
-    end
+    # context 'like' do 
+    #   it 'has correct has_many association' do 
+    #     should belong_to(:like) 
+    #   end
+    # end
 
-    context 'comment' do 
-      it 'has correct has_many association' do 
-        should belong_to(:comment) 
-      end
-    end
+    # context 'comment' do 
+    #   it 'has correct has_many association' do 
+    #     should belong_to(:comment) 
+    #   end
+    # end
   end
 end
