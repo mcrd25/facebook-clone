@@ -16,7 +16,15 @@
 
 FactoryBot.define do
   factory :notification do
-    notification_type_id { 1 }
-    reference_id { 1 }
+
+    trait :for_like do 
+      association :reference, factory: :like
+    end
+    
+    trait :for_comment do 
+      association :reference, factory: :comment
+    end
+
+    association :notification_type 
   end
 end

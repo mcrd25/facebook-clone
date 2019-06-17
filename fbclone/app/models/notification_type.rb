@@ -11,4 +11,6 @@
 class NotificationType < ApplicationRecord
 	validates :type, presence: true, inclusion: { in: %w(post_comment post_like),
     message: "%{value} is not a valid type" }
+
+  has_many :notifications
 end

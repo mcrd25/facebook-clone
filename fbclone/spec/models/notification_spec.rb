@@ -17,7 +17,9 @@
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
-  let(:notification) { FactoryBot.build(:notification) }
+  let(:notification) { FactoryBot.create(:notification) }
+  let(:like_notification) { FactoryBot.create(:notification, :for_like) }
+  let(:comment_notification) { FactoryBot.create(:notification, :for_comment) }
   
   describe 'test for presence of model attributes for' do
     describe 'general expected attributes' do 
@@ -48,8 +50,8 @@ RSpec.describe Notification, type: :model do
   describe 'Basic validations' do
     context 'notification_type_id' do 
       it 'is valid with a notification_type_id' do 
-        notification.valid?
-        expect(notification.errors[:notification_type_id]).to_not include("can't be blank")
+        like_notification.valid?
+        expect(like_notification.errors[:notification_type_id]).to_not include("can't be blank")
       end
 
       it 'is invalid without a notification_type_id' do 
@@ -69,6 +71,27 @@ RSpec.describe Notification, type: :model do
         notification.reference_id = nil
         notification.valid?
         expect(notification.errors[:reference_id]).to include("can't be blank")
+      end
+    end
+  end
+
+  describe "Associations" do
+
+    context 'notification_type' do 
+      it 'hast correct belongs_to association' do 
+        should belong_to(:notification_type) 
+      end 
+    end
+
+    context 'like' do 
+      it 'has correct has_many association' do 
+        should belong_to(:like) 
+      end
+    end
+
+    context 'comment' do 
+      it 'has correct has_many association' do 
+        should belong_to(:comment) 
       end
     end
   end
