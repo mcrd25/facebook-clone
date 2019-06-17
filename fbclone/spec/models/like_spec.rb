@@ -15,13 +15,13 @@ RSpec.describe Like, type: :model do
   
   let(:like) { FactoryBot.create(:like) }
 
-=begin
+
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
   let(:ilegal_post) { Post.count.nil? ? 1 : Post.count + 1 }
 
-  let(:like_with_ilegal_user) { Like.new(post_id: Post.first.id, user_id: ilegal_user, message: "Hello World") }
-  let(:like_with_ilegal_post) { Like.new(post_id: ilegal_post, user_id: User.first.id, message: "Hello World") }
-=end
+  let(:like_with_ilegal_user) { Like.new(post_id: Post.first.id, user_id: ilegal_user) }
+  let(:like_with_ilegal_post) { Like.new(post_id: ilegal_post, user_id: User.first.id) }
+
   
   describe 'test for presence of model attributes' do
     context 'general expected attributes' do
@@ -94,7 +94,7 @@ RSpec.describe Like, type: :model do
     end
   end
 
-=begin
+
   describe 'Constraints' do 
     context 'when like is created with user that does not exist' do 
       it 'should raise user must exist error' do 
@@ -108,5 +108,5 @@ RSpec.describe Like, type: :model do
       end 
     end 
   end
-=end
+
 end
