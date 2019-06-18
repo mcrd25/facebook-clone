@@ -2,23 +2,23 @@
 #
 # Table name: notifications
 #
-#  id                   :bigint           not null, primary key
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  notification_type_id :integer
-#  reference_id         :integer
+#  id              :bigint           not null, primary key
+#  notifiable_type :string
+#  status          :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  notifiable_id   :bigint
 #
 # Indexes
 #
-#  index_notifications_on_notification_type_id  (notification_type_id)
-#  index_notifications_on_reference_id          (reference_id)
+#  index_notifications_on_notifiable_type_and_notifiable_id  (notifiable_type,notifiable_id)
 #
 
-class Notification < ApplicationRecord
-	validates :notification_type_id, presence: true
-  validates :reference_id, presence: true
+class Notification < ActiveRecord::Base 
+  validates :status, presence: true, inclusion: { in: %w(Unread Read),
+    message: "%{value} is not a valid status" }
+  validates :notifiable_type, presence: true 
+  validates :notifiable_id, presence: true
 
-  belongs_to :reference, :polymorphic => true
-  belongs_to :notification_type
-  
+  belongs_to :notifiable, polymorphic: true
 end
