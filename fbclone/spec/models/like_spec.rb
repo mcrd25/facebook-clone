@@ -92,6 +92,12 @@ RSpec.describe Like, type: :model do
         should belong_to(:user) 
       end
     end
+
+    context 'notifications' do 
+      it 'has a correct has_many association' do 
+        should have_many(:notifications)
+      end
+    end 
   end
 
 

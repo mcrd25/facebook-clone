@@ -10,7 +10,7 @@
 #
 
 FactoryBot.define do
-  factory :like do
+  factory :like, aliases: [:reference] do
     #user_id { 1 }
     #post_id { 1 }
 
