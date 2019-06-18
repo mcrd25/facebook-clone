@@ -129,7 +129,7 @@ RSpec.describe Comment, type: :model do
     end 
   end
 
-
+=begin
   describe 'Constraints' do 
     
     context 'when comment is created with user that does not exist' do 
