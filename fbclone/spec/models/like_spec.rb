@@ -15,12 +15,12 @@ RSpec.describe Like, type: :model do
   
   let(:like) { FactoryBot.create(:like) }
 
-
+  let(:legal_user) { User.first }
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
   let(:ilegal_post) { Post.count.nil? ? 1 : Post.count + 1 }
 
   let(:like_with_ilegal_user) { Like.new(post_id: Post.first.id, user_id: ilegal_user) }
-  let(:like_with_ilegal_post) { Like.new(post_id: ilegal_post, user_id: User.first.id) }
+  let(:like_with_ilegal_post) { Like.new(post_id: ilegal_post, user_id: legal_user.id) }
 
   
   describe 'test for presence of model attributes' do

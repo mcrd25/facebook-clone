@@ -20,10 +20,10 @@ require 'rails_helper'
 
 RSpec.describe Friendship, type: :model do
   let(:friendship) { FactoryBot.create(:friendship) }
-
+  let(:legal_user) { User.first }
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
   let(:fr_with_ilegal_requester) { FriendRequest.new(requester_id: ilegal_user, requestee_id: User.first.id) }
-  let(:fr_with_ilegal_requestee) { FriendRequest.new(requester_id: User.first.id, requestee_id: ilegal_user) }
+  let(:fr_with_ilegal_requestee) { FriendRequest.new(requester_id: legal_user.id, requestee_id: ilegal_user) }
 
   describe 'test for presense of model attributes' do
 

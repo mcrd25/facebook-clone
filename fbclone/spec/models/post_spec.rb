@@ -121,7 +121,6 @@ RSpec.describe Post, type: :model do
   describe 'Constraints' do 
     context 'when post is created with user that does not exist' do 
       it 'should raise user must exist error' do 
-        
         expect { ilegal_post.save! }.to  raise_error(ActiveRecord::RecordInvalid, 'Validation failed: User must exist')
       end 
     end 

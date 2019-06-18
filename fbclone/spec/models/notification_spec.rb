@@ -22,6 +22,13 @@ RSpec.describe Notification, type: :model do
   let(:comment_notification) { FactoryBot.create(:notification, :for_comment) }
   let(:status) { ['Read', 'Unread'][rand(0..1)] }
 
+  let(:ilegal_like) { Like.count.nil? ? 1 : Like.count + 1 }
+  let(:ilegal_comment) {  Comment.count.nil? ? 1 : Comment.count + 1  }
+
+  let(:comment_model) { 'Comment' }
+  let(:like_model) { 'Like' }
+  
+
   describe 'test for presence of model attributes for' do
     describe 'general expected attributes' do 
 
@@ -114,6 +121,26 @@ RSpec.describe Notification, type: :model do
     context 'polymorphism' do 
       it 'has correct belongs_to association' do 
         should belong_to(:notifiable) 
+      end 
+    end
+  end
+
+  describe 'Constraints' do 
+    context 'when notification is created with Like that does not exist' do 
+      it 'should raise nofiable_id must exist error' do 
+        notification.notifiable_type = like_model
+        notification.notifiable_id = ilegal_like
+
+        expect { notification.save! }.to  raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Notifiable must exist')
+      end 
+    end 
+
+    context 'when notification is created with Comment that does not exist' do 
+      it 'should raise nofiable_id must exist error' do 
+        notification.notifiable_type = comment_model
+        notification.notifiable_id = ilegal_comment
+
+        expect { notification.save! }.to  raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Notifiable must exist')
       end 
     end
   end
