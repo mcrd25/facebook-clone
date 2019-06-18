@@ -100,7 +100,18 @@ RSpec.describe Like, type: :model do
     end 
   end
 
+<<<<<<< HEAD
 =begin
+=======
+  describe 'Dependents' do
+    context 'notifications' do
+      it 'should remove associated notifications when like is deleted' do
+        should have_many(:notifications).dependent(:destroy)
+      end
+    end
+  end
+
+>>>>>>> bf68dc58d4d3e0a45ff6b35b268a050d19283d6e
   describe 'Constraints' do 
     context 'when like is created with user that does not exist' do 
       it 'should raise user must exist error' do 
