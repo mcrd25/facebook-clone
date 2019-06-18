@@ -100,7 +100,7 @@ RSpec.describe Like, type: :model do
     end 
   end
 
-
+=begin
   describe 'Constraints' do 
     context 'when like is created with user that does not exist' do 
       it 'should raise user must exist error' do 
@@ -114,5 +114,5 @@ RSpec.describe Like, type: :model do
       end 
     end 
   end
-
+=end
 end

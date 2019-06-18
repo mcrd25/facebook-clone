@@ -15,10 +15,15 @@
 #
 
 class Notification < ActiveRecord::Base 
+  after_initialize :set_default_status
   validates :status, presence: true, inclusion: { in: %w(Unread Read),
     message: "%{value} is not a valid status" }
   validates :notifiable_type, presence: true 
   validates :notifiable_id, presence: true
 
   belongs_to :notifiable, polymorphic: true
+
+  def set_default_status
+    self.status = 'Unread'
+  end
 end

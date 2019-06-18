@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_225031) do
+ActiveRecord::Schema.define(version: 2019_06_18_225802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(version: 2019_06_17_225031) do
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.integer "requester_id"
-    t.integer "requestee_id"
+    t.integer "active_friend_id"
+    t.integer "passive_friend_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["requestee_id"], name: "index_friendships_on_requestee_id"
-    t.index ["requester_id", "requestee_id"], name: "index_friendships_on_requester_id_and_requestee_id", unique: true
-    t.index ["requester_id"], name: "index_friendships_on_requester_id"
+    t.index ["active_friend_id", "passive_friend_id"], name: "index_friendships_on_active_friend_id_and_passive_friend_id", unique: true
+    t.index ["active_friend_id"], name: "index_friendships_on_active_friend_id"
+    t.index ["passive_friend_id"], name: "index_friendships_on_passive_friend_id"
   end
 
   create_table "likes", force: :cascade do |t|

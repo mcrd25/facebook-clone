@@ -117,7 +117,7 @@ RSpec.describe Post, type: :model do
       end
     end
   end
-
+=begin
   describe 'Constraints' do 
     context 'when post is created with user that does not exist' do 
       it 'should raise user must exist error' do 
@@ -125,4 +125,5 @@ RSpec.describe Post, type: :model do
       end 
     end 
   end
+=end
 end

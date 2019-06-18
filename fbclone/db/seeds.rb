@@ -22,9 +22,6 @@ end
 
 puts 'Created 10 users!'
 
-#NotificationType.create!(name: 'post_comment')
-#NotificationType.create!(name: 'post_like')
-
 Post.create!(user_id: User.first.id, message: 'Testing posts')
 Post.create!(user_id: User.last.id, message: 'Testing posts 2')
 
@@ -39,3 +36,11 @@ Like.create!(user_id: User.last.id, post_id: Post.first.id)
 Like.create!(user_id: User.first.id, post_id: Post.last.id)
 
 puts 'Created 2 likes!'
+
+FriendRequest.create!(requester: User.first, requestee: User.last)
+Friendship.create!(active_friend: User.first, passive_friend: User.last)
+
+FriendRequest.create!(requester_id: 2, requestee_id: 3)
+Friendship.create!(active_friend_id: 2, passive_friend_id: 3)
+
+puts 'Created 2 Friend Request and 2 Friendship!'

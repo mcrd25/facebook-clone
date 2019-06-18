@@ -2,22 +2,22 @@
 #
 # Table name: friendships
 #
-#  id           :bigint           not null, primary key
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  requestee_id :integer
-#  requester_id :integer
+#  id                :bigint           not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  active_friend_id  :integer
+#  passive_friend_id :integer
 #
 # Indexes
 #
-#  index_friendships_on_requestee_id                   (requestee_id)
-#  index_friendships_on_requester_id                   (requester_id)
-#  index_friendships_on_requester_id_and_requestee_id  (requester_id,requestee_id) UNIQUE
+#  index_friendships_on_active_friend_id                        (active_friend_id)
+#  index_friendships_on_active_friend_id_and_passive_friend_id  (active_friend_id,passive_friend_id) UNIQUE
+#  index_friendships_on_passive_friend_id                       (passive_friend_id)
 #
 
 FactoryBot.define do
   factory :friendship do
-    association :requester
-    association :requestee
+    association :active_friend
+    association :passive_friend
   end
 end

@@ -256,7 +256,7 @@ RSpec.describe User, type: :model do
       it 'has many sent_requests through active_friend_requests' do
         should have_many(:sent_requests).through(:active_friend_requests).source(:requestee)
       end
-      it 'has many sent_requests through active_friend_requests' do
+      it 'has many sent_requests through passive_friend_requests' do
         should have_many(:received_requests).through(:passive_friend_requests).source(:requester)
       end
     end
@@ -269,11 +269,11 @@ RSpec.describe User, type: :model do
         should have_many(:passive_friendships) 
       end
 
-      it 'has many sent_requests through active_friend_requests' do
-        should have_many(:active_friends).through(:active_friendships).source(:requestee)
+      it 'has many active_friends through active_friend_requests' do
+        should have_many(:active_friends).through(:active_friendships)
       end
-      it 'has many sent_requests through active_friend_requests' do
-        should have_many(:passive_friends).through(:passive_friendships).source(:requester)
+      it 'has many passive_friends through passive_friend_requests' do
+        should have_many(:passive_friends).through(:passive_friendships)
       end
     end
   end

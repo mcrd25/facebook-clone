@@ -24,7 +24,7 @@
 require 'faker'
 
 FactoryBot.define do
-  factory :user, aliases: [:requester, :requestee] do
+  factory :user, aliases: [:active_friend, :passive_friend, :requestee, :requester] do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }

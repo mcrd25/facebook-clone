@@ -24,7 +24,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  before_save { [email.downcase!, first_name.capitalize!, last_name.capitalize!] }
+  before_save { [first_name.capitalize!, last_name.capitalize!] }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :first_name, presence: true, length: { maximum: 35 }
@@ -61,18 +61,16 @@ class User < ApplicationRecord
   has_many :received_requests, through: :passive_friend_requests,
                                         source: :requester
 
-  has_many :active_friendships, foreign_key: :requester_id,
+  has_many :active_friendships, foreign_key: :active_friend_id,
                                 class_name: 'Friendship',
                                 dependent: :destroy
-  has_many :passive_friendships, foreign_key: :requestee_id, 
+  has_many :passive_friendships, foreign_key: :passive_friend_id, 
                                  class_name: 'Friendship',
                                  dependent: :destroy
 
 
-  has_many :active_friends, through: :active_friendships, 
-                            source: :requestee
-  has_many :passive_friends, through: :passive_friendships,
-                             source: :requester
+  has_many :active_friends, through: :active_friendships 
+  has_many :passive_friends, through: :passive_friendships
 
 
   def full_name
