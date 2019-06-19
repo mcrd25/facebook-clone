@@ -20,9 +20,18 @@ require 'rails_helper'
 
 RSpec.describe Friendship, type: :model do
   let(:friendship) { FactoryBot.create(:friendship) }
-  let(:friendship2) { Friendship.new(passive_friend: User.last, active_friend: User.first) }
-  let(:active_friend){ FactoryBot.create(:user) }
-  let(:passive_friend){ FactoryBot.create(:user) }
+
+
+  let(:test_user) { User.create!(first_name: 'Maya', last_name: 'Douglas', email: 'maya@gmail.com', password: '12345678', gender: 'Female', birth_date: '1996-12-25') }
+  let(:test_user2) { User.create!(first_name: 'Maya2', last_name: 'Douglas2', email: 'maya2@gmail.com', password: '123456789', gender: 'Female', birth_date: '1995-12-25') }
+  let(:test_user3) { User.create!(first_name: 'Maya3', last_name: 'Douglas3', email: 'maya3@gmail.com', password: '123456789', gender: 'Female', birth_date: '1995-12-25') }
+  let(:test_user4) { User.create!(first_name: 'Maya4', last_name: 'Douglas4', email: 'maya4@gmail.com', password: '123456789', gender: 'Female', birth_date: '1995-12-25') }
+  let(:active_friend) { test_user }
+  let(:passive_friend) { test_user2 }
+  let(:friendship2) { Friendship.create!(passive_friend: passive_friend, active_friend: active_friend) }
+  let(:friendship3) { Friendship.new(passive_friend: active_friend, active_friend: passive_friend) }
+  let(:friendship4) { Friendship.new(active_friend: test_user4, passive_friend: test_user3) }
+
   let(:legal_user) { User.first }
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
   
@@ -46,26 +55,26 @@ RSpec.describe Friendship, type: :model do
     context 'requester_id' do
       it 'is valid with a active_friend_id' do 
         friendship.valid?
-        expect(friendship.errors[:active_friend_id]).to_not include("can't be blank")
+        expect(friendship.errors[:active_friend_id]).to_not include('can\'t be blank')
       end
 
       it 'is invalid without a active_friend_id' do 
         friendship.active_friend_id = nil
         friendship.valid?
-        expect(friendship.errors[:active_friend_id]).to include("can't be blank")
+        expect(friendship.errors[:active_friend_id]).to include('can\'t be blank')
       end
     end
 
     context 'requestee_id' do
       it 'is valid with a passive_friend_id' do 
         friendship.valid?
-        expect(friendship.errors[:passive_friend_id]).to_not include("can't be blank")
+        expect(friendship.errors[:passive_friend_id]).to_not include('can\'t be blank')
       end
 
       it 'is invalid without a passive_friend_id' do 
         friendship.passive_friend_id = nil
         friendship.valid?
-        expect(friendship.errors[:passive_friend_id]).to include("can't be blank")
+        expect(friendship.errors[:passive_friend_id]).to include('can\'t be blank')
       end
     end
    end
@@ -73,12 +82,19 @@ RSpec.describe Friendship, type: :model do
    describe 'Unique Constraints' do
     context 'active and passive friend combination should be unique' do
       it 'is not valid when passive friend and active friend combination is not unique' do
-        puts friendship2.active_friend_id
-        puts friendship2.passive_friend_id
-
-        expect(friendship2.save!).to raise_error("ActiveRecord::RecordInvalid: Validation failed: Unique friendship Already friends!")
+        friendship3.save!
+        friendship3.valid?
+        expect(friendship3.errors[:unique_friendship]).to include('Already friends!')
       end
-      
+      it 'is valid when passive friend and active friend combination is unique' do
+        # p "#{Friendship.find(friendship.)}"
+        # puts "#{friendship.inspect}"
+        # puts "is friendship valid? #{friendship.valid?}"
+
+        friendship4.save!
+        friendship4.valid?
+        expect(friendship4.errors[:unique_friendship]).to include('Already friends!')
+      end
     end
    end
 
