@@ -18,12 +18,12 @@
 class Friendship < ApplicationRecord
 	validates :active_friend_id, presence: true
 	validates :passive_friend_id, presence: true
-  validate :users_are_not_already_friends
+  validate :friendship_validation
 
 	belongs_to :active_friend, class_name: 'User'
 	belongs_to :passive_friend, class_name: 'User'
 
-	def users_are_not_already_friends
+	def friendship_validation
 	  if (Friendship.where(active_friend_id: active_friend_id, passive_friend_id: passive_friend_id).exists? || Friendship.where(active_friend_id: passive_friend_id, passive_friend_id: active_friend_id).exists?)
 	    self.errors.add(:unique_friendship, 'Already friends!')
 
@@ -31,5 +31,4 @@ class Friendship < ApplicationRecord
 	  	self.errors.add(:invalid_friendship, 'Cannot befriend self')
 	  end
 	end
- 
 end

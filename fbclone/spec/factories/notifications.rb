@@ -14,8 +14,6 @@
 #  index_notifications_on_notifiable_type_and_notifiable_id  (notifiable_type,notifiable_id)
 #
 
-
-
 FactoryBot.define do
   factory :notification do
     status { "Unread" }

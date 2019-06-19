@@ -21,8 +21,6 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-require 'faker'
-
 FactoryBot.define do
   factory :user, aliases: [:active_friend, :passive_friend, :requestee, :requester] do
     first_name { Faker::Name.first_name }
