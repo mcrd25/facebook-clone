@@ -76,7 +76,7 @@ RSpec.describe Friendship, type: :model do
         puts friendship2.active_friend_id
         puts friendship2.passive_friend_id
 
-        #expect(friendship2.save!).to raise_error("ActiveRecord::RecordInvalid: Validation failed: Unique friendship Already friends!")
+        expect(friendship2.save!).to raise_error("ActiveRecord::RecordInvalid: Validation failed: Unique friendship Already friends!")
       end
       
     end
