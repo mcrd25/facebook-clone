@@ -18,11 +18,12 @@
 class FriendRequest < ApplicationRecord
 	validates :requester_id, presence: true
 	validates :requestee_id, presence: true
+  validate :friend_request_validation
 
 	belongs_to :requester, class_name: 'User'
 	belongs_to :requestee, class_name: 'User'
 
-  def users_are_not_already_friends
+  def friend_request_validation
     if (FriendRequest.where(requester_id: requester_id, requestee_id: requestee_id).exists? || FriendRequest.where(requester_id: requestee_id, requestee_id: requester_id).exists?)
       self.errors.add(:unique_friend_request, 'Already requested!')
 

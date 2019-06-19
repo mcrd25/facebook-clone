@@ -20,6 +20,25 @@ FactoryBot.define do
     association :requester
     association :requestee
 
+    factory :legal_friend_request do 
+      requester {  User.create!(
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        email: Faker::Internet.email,
+        password: 'test123',
+        birth_date: Faker::Date.birthday,
+        gender: Faker::Gender.binary_type
+      ) }
+      requestee {  User.create!(
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        email: Faker::Internet.email,
+        password: 'test123',
+        birth_date: Faker::Date.birthday,
+        gender: Faker::Gender.binary_type
+      ) }
+    end
+
     factory :ilegal_friend_request do 
       requester { FriendRequest.first.requestee }
       requestee { FriendRequest.first.requester }      
@@ -29,7 +48,7 @@ FactoryBot.define do
 
       requester_id { User.first.nil? ? 1 : User.count + 1}
       if User.first.nil?
-        requester { User.create!(
+        requestee { User.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
@@ -43,7 +62,7 @@ FactoryBot.define do
     end
 
     factory :fr_ilegal_requestee do 
-      requester_id { User.first.nil? ? 1 : User.count + 1}
+      requestee_id { User.first.nil? ? 1 : User.count + 1}
       if User.first.nil?
         requester { User.create!(
       first_name: Faker::Name.first_name,

@@ -20,12 +20,10 @@ require 'rails_helper'
 
 RSpec.describe FriendRequest, type: :model do
 	let(:friend_request) { FactoryBot.create(:friend_request) }
-  
-  #let(:ilegal_user) { User.first.nil? ? 1 : User.count + 1 }
-  #let(:fr_with_ilegal_requester) { FriendRequest.new(requester_id: ilegal_user, requestee_id: User.first.id) }
-  #let(:fr_with_ilegal_requestee) { FriendRequest.new(requester_id: User.first.id, requestee_id: ilegal_user) }
 
   let(:ilegal_friend_request) { FactoryBot.build(:ilegal_friend_request) }
+  let(:legal_friend_request) { FactoryBot.build(:legal_friend_request) }
+
   let(:fr_ilegal_requester) { FactoryBot.build(:fr_ilegal_requester) }
   let(:fr_ilegal_requestee) { FactoryBot.build(:fr_ilegal_requestee) }
 
@@ -97,14 +95,14 @@ RSpec.describe FriendRequest, type: :model do
 
   describe 'Unique Constraints' do
     context 'requester and requestee combination should be unique' do
-      it 'is not valid when passive and active friend combination isn\'t unique' do
+      it 'is not valid when requester and requestee combination is not unique' do
         ilegal_friend_request.valid?
         expect(ilegal_friend_request.errors[:unique_friend_request]).to include('Already requested!')
       end
 
       it 'is valid when passive and active friend combination is unique' do
-        friend_request.valid?
-        expect(friend_request.errors[:unique_friend_request]).to_not include('Already requested!')
+        legal_friend_request.valid?
+        expect(legal_friend_request.errors[:unique_friend_request]).to_not include('Already requested!')
       end
     end
    end
@@ -117,10 +115,10 @@ RSpec.describe FriendRequest, type: :model do
       end
     end 
 
-    context 'when friend_request is created with requester_id that does not exist' do 
+    context 'when friend_request is created with requestee_id that does not exist' do 
       it 'should raise user must exist error' do
         fr_ilegal_requestee.valid?
-        expect(fr_ilegal_requester.errors[:requestee]).to include("must exist")
+        expect(fr_ilegal_requestee.errors[:requestee]).to include("must exist")
       end
     end 
   end
