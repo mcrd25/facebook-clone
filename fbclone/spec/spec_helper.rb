@@ -36,7 +36,7 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
-  config.order = :random # runs test cases in random order
+  #config.order = :random # runs test cases in random order
   Kernel.srand config.seed # to replicate exact test order 
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
