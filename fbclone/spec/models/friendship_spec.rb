@@ -20,6 +20,9 @@ require 'rails_helper'
 
 RSpec.describe Friendship, type: :model do
   let(:friendship) { FactoryBot.create(:friendship) }
+  let(:friendship2) { Friendship.new(passive_friend: User.last, active_friend: User.first) }
+  let(:active_friend){ FactoryBot.create(:user) }
+  let(:passive_friend){ FactoryBot.create(:user) }
   let(:legal_user) { User.first }
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
   
@@ -64,6 +67,18 @@ RSpec.describe Friendship, type: :model do
         friendship.valid?
         expect(friendship.errors[:passive_friend_id]).to include("can't be blank")
       end
+    end
+   end
+
+   describe 'Unique Constraints' do
+    context 'active and passive friend combination should be unique' do
+      it 'is not valid when passive friend and active friend combination is not unique' do
+        puts friendship2.active_friend_id
+        puts friendship2.passive_friend_id
+
+        #expect(friendship2.save!).to raise_error("ActiveRecord::RecordInvalid: Validation failed: Unique friendship Already friends!")
+      end
+      
     end
    end
 
