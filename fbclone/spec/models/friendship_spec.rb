@@ -21,31 +21,21 @@ require 'rails_helper'
 RSpec.describe Friendship, type: :model do
   let(:friendship) { FactoryBot.create(:friendship) }
 
+  let(:ilegal_friendship) { FactoryBot.build(:ilegal_friendship) }
+  let(:legal_friendship) { FactoryBot.build(:legal_friendship) }
 
-  let(:test_user) { User.create!(first_name: 'Maya', last_name: 'Douglas', email: 'maya@gmail.com', password: '12345678', gender: 'Female', birth_date: '1996-12-25') }
-  let(:test_user2) { User.create!(first_name: 'Maya2', last_name: 'Douglas2', email: 'maya2@gmail.com', password: '123456789', gender: 'Female', birth_date: '1995-12-25') }
-  let(:test_user3) { User.create!(first_name: 'Maya3', last_name: 'Douglas3', email: 'maya3@gmail.com', password: '123456789', gender: 'Female', birth_date: '1995-12-25') }
-  let(:test_user4) { User.create!(first_name: 'Maya4', last_name: 'Douglas4', email: 'maya4@gmail.com', password: '123456789', gender: 'Female', birth_date: '1995-12-25') }
-  let(:active_friend) { test_user }
-  let(:passive_friend) { test_user2 }
-  let(:friendship2) { Friendship.create!(passive_friend: passive_friend, active_friend: active_friend) }
-  let(:friendship3) { Friendship.new(passive_friend: active_friend, active_friend: passive_friend) }
-  let(:friendship4) { Friendship.new(active_friend: test_user4, passive_friend: test_user3) }
-
-  let(:legal_user) { User.first }
-  let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
+  let(:fr_ilegal_active_friend) { FactoryBot.build(:fr_ilegal_active_friend) }
+  let(:fr_ilegal_passive_friend) { FactoryBot.build(:fr_ilegal_passive_friend) }
   
-  #let(:fr_with_ilegal_requester) { FriendRequest.new(active_friend_id: ilegal_user, passive_friend_id: User.first.id) }
-  #let(:fr_with_ilegal_requestee) { FriendRequest.new(active_friend_id: legal_user.id, passive_friend_id: ilegal_user) }
 
   describe 'test for presense of model attributes' do
 
     context 'general expected attributes' do
-      it 'should include requester_id attribute' do
+      it 'should include active_friend_id attribute' do
         expect(friendship.attributes).to include('active_friend_id')
       end
 
-      it 'should include requestee_id attribute' do
+      it 'should include pasive_friend_id attribute' do
         expect(friendship.attributes).to include('passive_friend_id')
       end
     end
@@ -81,19 +71,14 @@ RSpec.describe Friendship, type: :model do
 
    describe 'Unique Constraints' do
     context 'active and passive friend combination should be unique' do
-      it 'is not valid when passive friend and active friend combination is not unique' do
-        friendship3.save!
-        friendship3.valid?
-        expect(friendship3.errors[:unique_friendship]).to include('Already friends!')
+      it 'is not valid when passive and active friend combination isn\'t unique' do
+        ilegal_friendship.valid?
+        expect(ilegal_friendship.errors[:unique_friendship]).to include('Already friends!')
       end
-      it 'is valid when passive friend and active friend combination is unique' do
-        # p "#{Friendship.find(friendship.)}"
-        # puts "#{friendship.inspect}"
-        # puts "is friendship valid? #{friendship.valid?}"
 
-        friendship4.save!
-        friendship4.valid?
-        expect(friendship4.errors[:unique_friendship]).to include('Already friends!')
+      it 'is valid when passive and active friend combination is unique' do
+        legal_friendship.valid?
+        expect(legal_friendship.errors[:unique_friendship]).to_not include('Already friends!')
       end
     end
    end
@@ -109,25 +94,19 @@ RSpec.describe Friendship, type: :model do
     end
   end
 
-# TODO
-
-=begin
   describe ' Constraints' do 
     context 'when friendship is created with requester_id that does not exist' do 
       it 'should raise user must exist error' do
-        expect { fr_with_ilegal_requester.save! }.to  raise_error(
-          ActiveRecord::RecordInvalid, 'Validation failed: ActiveFriend must exist'
-        )
+        fr_ilegal_active_friend.valid?
+        expect(fr_ilegal_active_friend.errors[:active_friend]).to include("must exist")
       end
     end 
 
     context 'when friendship is created with requester_id that does not exist' do 
       it 'should raise user must exist error' do
-        expect { fr_with_ilegal_requestee.save! }.to  raise_error(
-          ActiveRecord::RecordInvalid, 'Validation failed: PassiveFriend must exist'
-        )
+        fr_ilegal_passive_friend.valid?
+        expect(fr_ilegal_passive_friend.errors[:passive_friend]).to include("must exist")
       end
     end 
   end
-=end
 end
