@@ -31,5 +31,4 @@ class Friendship < ApplicationRecord
 	  	self.errors.add(:invalid_friendship, 'Cannot befriend self')
 	  end
 	end
- 
 end

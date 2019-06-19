@@ -21,4 +21,13 @@ class FriendRequest < ApplicationRecord
 
 	belongs_to :requester, class_name: 'User'
 	belongs_to :requestee, class_name: 'User'
+
+  def users_are_not_already_friends
+    if (FriendRequest.where(requester_id: requester_id, requestee_id: requestee_id).exists? || FriendRequest.where(requester_id: requestee_id, requestee_id: requester_id).exists?)
+      self.errors.add(:unique_friend_request, 'Already requested!')
+
+    elsif requester_id == requestee_id
+      self.errors.add(:invalid_friend_request, 'Cannot befriend self')
+    end
+  end
 end
