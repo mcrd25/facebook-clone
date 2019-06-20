@@ -29,10 +29,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :first_name, presence: true, length: { maximum: 35 }
   validates :last_name, presence: true, length: { maximum: 35 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  validates :email, presence: true,  length: { in: 3..255 }
-                    # format: { with: VALID_EMAIL_REGEX },
-                    # uniqueness: { case_sensitive: false }
+  validates :email, length: { maximum: 255 }
   validates :gender, presence: true, inclusion: { in: %w(Male Female),
     message: "%{value} is not a valid gender" }
   VALID_BIRTHDATE_REGEX = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
