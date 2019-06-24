@@ -35,6 +35,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -80,4 +81,7 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+  # Use Devise test helpers in controller specs
+  config.include Devise::Test::ControllerHelpers, type: :controller
 end
