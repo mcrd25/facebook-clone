@@ -1,0 +1,23 @@
+require 'rails_helper'
+
+RSpec.describe HomeController, type: :controller do
+
+	describe 'Index tests' do
+		context 'response' do
+		  it 'expects response to index to be successful' do 
+		    get :index 
+		    expect(response).to be_success
+		  end
+		end
+		context 'http status' do
+		  it 'returns a 200 response' do
+		    get :index
+		    expect(response).to have_http_status '200'
+		  end
+		  it 'does not return 404 response' do
+		  	get :index
+		  	expect(response).to_not have_http_status '404'
+		  end
+		end
+	end
+end
