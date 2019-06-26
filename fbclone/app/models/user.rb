@@ -70,8 +70,12 @@ class User < ApplicationRecord
   has_many :passive_friends, through: :passive_friendships
 
 
-  def full_name
-  	"#{first_name} #{last_name}"
-  end
+  # def full_name
+  # 	"#{first_name} #{last_name}"
+  # end
+
+  # def friends
+  #   active_friends + passive_friends
+  # end
                                  
 end
