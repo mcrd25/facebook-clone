@@ -26,7 +26,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  before_save { [first_name.capitalize!, last_name.capitalize!] }
+  before_save { [first_name.capitalize!, last_name.capitalize!, create_username] }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :first_name, presence: true, length: { maximum: 35 }
@@ -79,5 +79,24 @@ class User < ApplicationRecord
   # def friends
   #   active_friends + passive_friends
   # end
-                                 
+
+  def create_username
+    u = first_name + last_name[0]
+    self.username = find_unique_username(u.downcase)
+  end      
+
+  private  
+
+  def find_unique_username(username)
+    taken_usernames = User.where("username LIKE ?", "#{username}%").pluck(:username)
+
+    return username if !taken_usernames.include?(username)
+
+    count = 2
+    while true
+      new_username = "#{username}#{count}"
+      return new_username if !taken_usernames.include?(new_username)
+      count += 1
+    end
+  end       
 end
