@@ -29,6 +29,7 @@ require 'faker'
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.build(:user) }
   let(:user2) { FactoryBot.build(:user) }
+  # let(:user3) { FactoryBot.create(:user) }
   
   describe 'test for presence of model attributes for' do
     describe 'general expected attributes' do 
@@ -318,6 +319,22 @@ RSpec.describe User, type: :model do
     context 'full_name method' do
       it 'returns full name via concatenation of first_name and last_name variables with space between' do
         expect(user2.full_name).to eq("#{user2.first_name} #{user2.last_name}")
+      end
+    end
+    context 'create_username method when first_name and last_name[0] combination unique' do
+      it 'returns username via concatenation of first_name and first letter of last_name variables' do
+        exp_username = user2.first_name.downcase + user2.last_name[0].downcase
+        expect(user2.create_username).to eq(exp_username)
+      end
+    end
+    context 'create_username method when first_name and last_name[0] combination already exists' do
+      it 'returns username via concatenation of first_name and first letter of last_name variables' do
+        user3 = user2
+        user2.save!
+        user3.email = 'anuniqueemail@example.com'
+
+        exp_username = "#{user3.first_name.downcase}#{user3.last_name[0].downcase}2"
+        expect(user3.create_username).to eq(exp_username)
       end
     end
   end

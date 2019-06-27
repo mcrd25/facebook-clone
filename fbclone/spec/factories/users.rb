@@ -29,6 +29,7 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     password { 'test123' }
+    username { nil }
     birth_date { Faker::Date.birthday }
     gender { Faker::Gender.binary_type }
   end
