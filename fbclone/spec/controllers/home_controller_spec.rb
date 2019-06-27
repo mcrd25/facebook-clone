@@ -12,7 +12,7 @@ RSpec.describe HomeController, type: :controller do
 			it 'responds succesfully' do 
 		    sign_in @user
 		    get :index 
-		    expect(response).to be_success
+		    expect(response).to be_successful
 		  end
 
 		  it 'responds with 200' do
