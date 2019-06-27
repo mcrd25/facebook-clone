@@ -1,9 +1,14 @@
 class ProfilesController < ApplicationController
+	before_action :set_user
   def show 
-  	@user = current_user
   end
 
   def edit
-    redirect_to :show if !user_signed_in?
+    redirect_to  action: 'show', username: params[:username] if !user_signed_in?
+  end
+
+  private
+  def set_user
+  	@user = User.find_by(username: params[:username])
   end
 end
