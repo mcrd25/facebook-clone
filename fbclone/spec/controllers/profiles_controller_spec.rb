@@ -59,7 +59,7 @@ RSpec.describe ProfilesController, type: :controller do
     end
 
     context 'when user is NOT logged in' do 
-      context 'when viewing his own profile' do 
+      context 'when viewing a profile' do 
         it 'responds succesfully' do 
           get :show, params: { username: user.username }
           expect(response).to be_successful
@@ -79,28 +79,6 @@ RSpec.describe ProfilesController, type: :controller do
           get :show, params: { username: user.username }
           expect(response).to render_template(:show)
         end 
-      end
-
-      context 'when viewing another profile' do
-        it 'responds succesfully' do 
-          get :show, params: { username: other.username }
-          expect(response).to be_successful
-        end
-
-        it 'responds with 200' do
-          get :show, params: { username: other.username }
-          expect(response).to have_http_status '200'
-        end
-
-        it 'does not respond with 404' do
-          get :show, params: { username: other.username }
-          expect(response).to_not have_http_status '404'
-        end
-
-        it 'renders :show template' do
-          get :show, params: { username: other.username }
-          expect(response).to render_template(:show)
-        end
       end
     end
   end
