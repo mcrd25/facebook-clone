@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-	before_action :set_user
+	# before_action :set_user
 	before_action :is_not_current_user?, only: [:show]
 
   def show 
@@ -10,13 +10,13 @@ class ProfilesController < ApplicationController
                  username: params[:username] if is_not_current_user?
   end
 
-  private
+  # private
 
-  def set_user
-  	@user = User.find_by(username: params[:username])
-  end
+  # def set_user
+  # 	@user = User.find_by(username: params[:username])
+  # end
 
-  def is_not_current_user?
-  	current_user != @user
-  end
+  # def is_not_current_user?
+  # 	current_user != @user
+  # end
 end
