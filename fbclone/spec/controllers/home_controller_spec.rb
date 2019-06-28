@@ -4,35 +4,32 @@ RSpec.describe HomeController, type: :controller do
 
 	describe 'GET index' do
 
-		before do 
-			@user = FactoryBot.create(:user)
-		end
+		let(:user) { FactoryBot.create(:user) }
 
 		context 'when user is logged in' do 
 			it 'responds succesfully' do 
-		    sign_in @user
+		    sign_in user
 		    get :index 
-		    expect(response).to be_success
+		    expect(response).to be_successful
 		  end
 
 		  it 'responds with 200' do
-		    sign_in @user
+		    sign_in user
 		    get :index
 		    expect(response).to have_http_status '200'
 		  end
 
 		  it 'does not respond with 404' do
-		  	sign_in @user
+		  	sign_in user
 		  	get :index
 		  	expect(response).to_not have_http_status '404'
 		  end
 
 		  it 'renders index' do
-				sign_in @user 
+				sign_in user 
 				get :index
 				expect(response).to render_template(:index)
-			end 
-
+			end
 		end
 
 		context 'when user is not logged in' do
