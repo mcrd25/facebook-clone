@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :edit], path: '/:username' do 
     resources :posts, only: [:index, :show]
   end
+
+  root 'home#index'
 end

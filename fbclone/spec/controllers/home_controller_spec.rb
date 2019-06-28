@@ -7,27 +7,25 @@ RSpec.describe HomeController, type: :controller do
 		let(:user) { FactoryBot.create(:user) }
 
 		context 'when user is logged in' do 
-			it 'responds succesfully' do 
-		    sign_in user
+
+			before do 
+				sign_in user 
 		    get :index 
+			end
+
+			it 'responds succesfully' do 
 		    expect(response).to be_successful
 		  end
 
 		  it 'responds with 200' do
-		    sign_in user
-		    get :index
 		    expect(response).to have_http_status '200'
 		  end
 
 		  it 'does not respond with 404' do
-		  	sign_in user
-		  	get :index
 		  	expect(response).to_not have_http_status '404'
 		  end
 
-		  it 'renders index' do
-				sign_in user 
-				get :index
+		  it 'renders index'do
 				expect(response).to render_template(:index)
 			end
 		end
