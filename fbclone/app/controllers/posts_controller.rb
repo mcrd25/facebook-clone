@@ -1,9 +1,28 @@
 class PostsController < ApplicationController
-	before_action :is_not_current_user?, only: [:index]
+  before_action :set_post
 	
   def index
   end
 
   def show
+    redirect_to profile_posts_path if not_signed_in?
+  end
+
+  def edit 
+    if not_post_owner? && not_signed_in?
+      redirect_to profile_posts_path 
+    elsif not_post_owner?
+      redirect_to profile_post_path
+    end
+  end
+
+  private 
+
+  def set_post 
+    @post = Post.find_by(id: params[:id])
+  end
+
+  def not_post_owner?
+    current_user != @post.user
   end
 end
