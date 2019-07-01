@@ -300,4 +300,27 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    context 'when logged in' do
+      before do 
+        sign_in a_user
+      end 
+      context 'as an authorized user' do
+        it 'deletes the post' do
+          expect { delete :destroy, params: { username: a_user.username, id: a_post.id } }.to change(a_user.posts, :count).by(-1)
+        end
+
+        it 'redirects to profile_posts_path' do
+          delete :destroy, params: { username: a_user.username, id: a_post.id }
+          expect(response).to redirect_to(profile_posts_path)
+        end
+      end
+      context 'as an unauthorized user' do
+        it 'does not delete the post' do
+          expect { delete :destroy, params: {username: other.username, id: other_post.id } }.to_not change(other.posts, :count)
+        end
+      end
+    end
+  end
 end

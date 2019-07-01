@@ -42,6 +42,16 @@ class PostsController < ApplicationController
     end
   end
 
+
+  def destroy
+    if post_owner?
+      @post.destroy
+      redirect_to some_url profile_posts_path
+    else
+      render 'index'
+    end
+  end
+
   private 
 
   def set_post 
@@ -50,6 +60,10 @@ class PostsController < ApplicationController
 
   def not_post_owner?
     current_user != @post.user
+  end
+
+  def post_owner?
+    current_user == @post.user
   end
 
   def post_params
