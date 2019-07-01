@@ -165,13 +165,17 @@ RSpec.describe PostsController, type: :controller do
     before do 
       sign_in a_user
     end
+    let(:updated_message) { 'lorem ipsum an updated post =)' }
     context 'when authorised user' do
       it 'expects post to change value' do
-        updated_message = 'lorem ipsum an updated post =)'
-        post_params = FactoryBot.attributes_for(:post,
-        message: updated_message)
+        post_params = FactoryBot.attributes_for(:post, message: updated_message)
         patch :update, params: { username: a_user.username, id: post.id, post: post_params }
         expect(post.reload.message).to eq updated_message
+      end
+      it 'expects post to change value' do
+        post_params = FactoryBot.attributes_for(:post, message: updated_message)
+        patch :update, params: { username: a_user.username, id: post.id, post: post_params }
+        expect(response).to redirect_to(profile_posts_path)
       end
     end
   end
