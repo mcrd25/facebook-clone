@@ -18,9 +18,9 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to profile_posts_path
+      # redirect_to profile_posts_path
     else
-      redirect_to edit_profile_post_path
+      render 'edit'
     end
   end
 
