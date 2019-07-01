@@ -4,7 +4,7 @@ RSpec.describe PostsController, type: :controller do
   
   let(:a_user) { FactoryBot.create(:user) }
   let(:other) { FactoryBot.create(:user) }
-  let(:post) { FactoryBot.create(:post, user: a_user) }
+  let(:a_post) { FactoryBot.create(:post, user: a_user) }
   let(:other_post) { FactoryBot.create(:post, user: other) }
 
 
@@ -87,7 +87,7 @@ RSpec.describe PostsController, type: :controller do
     context 'when user is NOT logged in' do 
 
       before do 
-        get :show, params: { username: a_user.username, id: post.id }
+        get :show, params: { username: a_user.username, id: a_post.id }
       end
 
       it 'redirects to profile_posts_path' do 
@@ -106,7 +106,7 @@ RSpec.describe PostsController, type: :controller do
 
       context 'when editing his own post' do 
         before do 
-          get :edit, params: { username: a_user.username, id: post.id }
+          get :edit, params: { username: a_user.username, id: a_post.id }
         end
 
         it 'responds succesfully' do 
@@ -171,11 +171,11 @@ RSpec.describe PostsController, type: :controller do
       before do 
         sign_in a_user
         post_params = FactoryBot.attributes_for(:post, message: updated_message)
-        patch :update, params: { username: a_user.username, id: post.id, post: post_params }
+        patch :update, params: { username: a_user.username, id: a_post.id, post: post_params }
       end
 
       it 'updates message attribute' do
-        expect(post.reload.message).to eq updated_message
+        expect(a_post.reload.message).to eq updated_message
       end
 
       it 'redirects to profile_posts_path' do
@@ -188,7 +188,7 @@ RSpec.describe PostsController, type: :controller do
       before do 
         sign_in other
         post_params = FactoryBot.attributes_for(:post, message: updated_message)
-        patch :update, params: { username: a_user.username, id: post.id, post: post_params }
+        patch :update, params: { username: a_user.username, id: a_post.id, post: post_params }
       end
 
       it 'does not respond succesfully' do
@@ -246,16 +246,17 @@ RSpec.describe PostsController, type: :controller do
     context 'when authorised user' do
       before do 
         sign_in a_user
-        post_params = FactoryBot.attributes_for(:post, message: 'Lorem Ipsum')
-        post :create, params: { username: a_user.username, post: post_params }
       end 
 
 
       it 'creates new post' do
-        expect { post :create, params: { post: post_params } }.to change(Post.all, :count).by(1)
+        post_params = FactoryBot.attributes_for(:post, user_id: a_user.id)
+        expect { post :create, params: { username: a_user.username, post: post_params } }.to change(a_user.posts, :count).by(1)
       end
 
       it 'redirects to profile_posts_path' do
+        post_params = FactoryBot.attributes_for(:post)
+        post :create, params: { username: a_user.username, post: post_params }
         expect(response).to redirect_to(profile_posts_path)
       end
     end

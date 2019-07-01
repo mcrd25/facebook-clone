@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post
+  before_action :set_post, except: [:new, :create]
 	
   def index
   end
@@ -10,6 +10,16 @@ class PostsController < ApplicationController
 
   def new 
     redirect_to profile_posts_path if not_signed_in?
+  end
+
+  def create
+    @post = Post.new(post_params)
+    @post.user_id = current_user.id
+    if @post.save
+      redirect_to profile_posts_path
+    else
+      render 'new'
+    end
   end
 
   def edit 
