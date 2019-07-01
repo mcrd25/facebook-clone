@@ -64,7 +64,7 @@ RSpec.describe PostsController, type: :controller do
       
       before do 
         sign_in a_user
-        get :show, params: { username: a_user.username, id: post.id }
+        get :show, params: { username: a_user.username, id: a_post.id }
       end
 
       it 'responds succesfully' do 
@@ -152,7 +152,7 @@ RSpec.describe PostsController, type: :controller do
     context 'when user is NOT logged in' do 
 
       before do 
-        get :edit, params: { username: a_user.username, id: post.id }
+        get :edit, params: { username: a_user.username, id: a_post.id }
       end
 
       it 'redirects to :index' do 
@@ -243,15 +243,54 @@ RSpec.describe PostsController, type: :controller do
 
   describe 'POST create' do
     
-    context 'when authorised user' do
+    context 'when logged in' do
       before do 
         sign_in a_user
       end 
 
+      context 'when authorised' do 
 
-      it 'creates new post' do
+        it 'creates new post with valid attributes' do
+          post_params = FactoryBot.attributes_for(:post, user_id: a_user.id)
+          expect { post :create, params: { username: a_user.username, post: post_params } }.to change(a_user.posts, :count).by(1)
+        end
+
+        it 'does not create new post with invalid message' do
+          post_params = FactoryBot.attributes_for(:post, :invalid, user_id: a_user.id)
+          expect { post :create, params: { username: a_user.username, post: post_params } }.to_not change(a_user.posts, :count)
+        end
+
+        it 'redirects to profile_posts_path after create' do
+          post_params = FactoryBot.attributes_for(:post)
+          post :create, params: { username: a_user.username, post: post_params }
+          expect(response).to redirect_to(profile_posts_path)
+        end
+      end
+
+      context 'when not authorised' do 
+        it 'does not create new post' do
+          post_params = FactoryBot.attributes_for(:post, user_id: other.id)
+          expect { post :create, params: { username: other.username, post: post_params } }.to_not change(other.posts, :count)
+        end
+
+        it 'redirects to profile_posts_path' do
+          post_params = FactoryBot.attributes_for(:post, user_id: other.id)
+          post :create, params: { username: other.username, post: post_params }
+          expect(response).to redirect_to(profile_posts_path)
+        end
+      end
+    end
+
+    context 'when not logged in' do 
+      it 'fails to create new post' do
         post_params = FactoryBot.attributes_for(:post, user_id: a_user.id)
-        expect { post :create, params: { username: a_user.username, post: post_params } }.to change(a_user.posts, :count).by(1)
+        expect { post :create, params: { username: a_user.username, post: post_params } }.to_not change(a_user.posts, :count)
+      end
+
+      it 'responds with 302' do
+        post_params = FactoryBot.attributes_for(:post)
+        post :create, params: { username: a_user.username, post: post_params }
+        expect(response).to have_http_status('302')
       end
 
       it 'redirects to profile_posts_path' do
@@ -259,9 +298,6 @@ RSpec.describe PostsController, type: :controller do
         post :create, params: { username: a_user.username, post: post_params }
         expect(response).to redirect_to(profile_posts_path)
       end
-    end
-
-    context 'when unauthorised user' do 
     end
   end
 end

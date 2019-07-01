@@ -13,12 +13,16 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user_id = current_user.id
-    if @post.save
-      redirect_to profile_posts_path
+    if user_signed_in?
+      @post = Post.new(post_params)
+      @post.user_id = current_user.id
+      if @post.save
+        redirect_to profile_posts_path
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      redirect_to profile_posts_path
     end
   end
 
