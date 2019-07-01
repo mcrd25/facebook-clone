@@ -8,6 +8,10 @@ class PostsController < ApplicationController
     redirect_to profile_posts_path if not_signed_in?
   end
 
+  def new 
+    redirect_to profile_posts_path if not_signed_in?
+  end
+
   def edit 
     if not_post_owner? && not_signed_in?
       redirect_to profile_posts_path

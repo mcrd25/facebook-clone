@@ -161,22 +161,106 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-  describe 'POST update' do
-    before do 
-      sign_in a_user
-    end
+  describe 'PATCH update' do
+    
     let(:updated_message) { 'lorem ipsum an updated post =)' }
+
+
     context 'when authorised user' do
-      it 'expects post to change value' do
+      
+      before do 
+        sign_in a_user
         post_params = FactoryBot.attributes_for(:post, message: updated_message)
         patch :update, params: { username: a_user.username, id: post.id, post: post_params }
+      end
+
+      it 'updates message attribute' do
         expect(post.reload.message).to eq updated_message
       end
-      it 'expects post to change value' do
-        post_params = FactoryBot.attributes_for(:post, message: updated_message)
-        patch :update, params: { username: a_user.username, id: post.id, post: post_params }
+
+      it 'redirects to profile_posts_path' do
         expect(response).to redirect_to(profile_posts_path)
       end
+    end
+
+    context 'when unauthorised user' do 
+    
+      before do 
+        sign_in other
+        post_params = FactoryBot.attributes_for(:post, message: updated_message)
+        patch :update, params: { username: a_user.username, id: post.id, post: post_params }
+      end
+
+      it 'does not respond succesfully' do
+        expect(response).to_not be_successful
+      end
+
+      it 'redirects to profile_posts_path' do
+        expect(response).to redirect_to(profile_posts_path)
+      end
+    end
+  end
+
+  describe 'GET new' do
+
+    context 'when logged in' do 
+      before do 
+         sign_in a_user
+         get :new, params: { username: a_user.username }
+      end
+
+      it 'responds succesfully' do 
+        expect(response).to be_successful
+      end
+
+      it 'responds with 200' do 
+        expect(response).to have_http_status('200')
+      end
+
+      it 'renders new' do 
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when not logged in' do 
+      before do 
+         get :new, params: { username: a_user.username }
+      end
+
+      it 'does not respond succesfully' do 
+        expect(response).to_not be_successful
+      end
+
+      it 'responds with 302' do 
+        expect(response).to have_http_status('302')
+      end
+
+      it 'redirects to profile_posts_path' do 
+        expect(response).to redirect_to(profile_posts_path)
+      end
+    end
+  end
+
+  describe 'POST create' do
+    
+    context 'when authorised user' do
+      before do 
+        sign_in a_user
+        post_params = FactoryBot.attributes_for(:post, message: 'Lorem Ipsum')
+        post :create, params: { username: a_user.username, post: post_params }
+      end 
+
+
+      it 'creates new post' do
+        expect { post :create, params: { post: post_params } }.to change(Post.all, :count).by(1)
+      end
+
+      it 'redirects to profile_posts_path' do
+        expect(response).to redirect_to(profile_posts_path)
+      end
+    end
+
+    context 'when unauthorised user' do 
     end
   end
 end
