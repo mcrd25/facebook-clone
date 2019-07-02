@@ -6,11 +6,6 @@ RSpec.describe FriendRequestsController, type: :controller do
   let(:request) { FactoryBot.build(:friend_request, requester: a_user, requestee: other) }
   let(:unauthorized_user) { FactoryBot.create(:user) }
 
-  describe 'GET index' do
-  end
-
-  describe 'GET show' do
-  end
 
   describe 'POST create' do
 
