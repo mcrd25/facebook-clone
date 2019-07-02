@@ -6,5 +6,10 @@ Rails.application.routes.draw do
     resources :friend_requests, only: [:create]
   end
 
+  namespace :friends do
+	 resources :sent_requests
+	 resources :received_requests
+	end
+
   root 'home#index'
 end

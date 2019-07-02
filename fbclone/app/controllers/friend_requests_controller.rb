@@ -8,6 +8,9 @@ class FriendRequestsController < ApplicationController
     end
   end
 
+  def destroy
+  end
+
   private 
 
   def request_params

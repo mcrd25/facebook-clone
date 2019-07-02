@@ -1,0 +1,2 @@
+module Friends::ReceivedRequestsHelper
+end

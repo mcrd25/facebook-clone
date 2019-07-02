@@ -28,15 +28,15 @@ RSpec.describe FriendRequestsController, type: :controller do
         end
       end
 
-      context 'when unauthorised' do 
-        it 'does not create request' do
-          skip
-        end
+      # context 'when unauthorised' do 
+      #   it 'does not create request' do
+      #     expect { post :create, params: { username: other.username } }.to change(a_user.sent_requests, :count).by(1)
+      #   end
 
-        it 'is unsuccesful' do 
-          skip
-        end
-      end
+      #   it 'is unsuccesful' do 
+      #     skip
+      #   end
+      # end
     end
 
     context 'when not logged in' do 
