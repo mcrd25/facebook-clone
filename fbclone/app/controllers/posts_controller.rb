@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, except: [:new, :create]
+  before_action :set_user, only: [:index]
 	
   def index
+    @posts = @user.posts if params[:username]
   end
 
   def show

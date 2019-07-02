@@ -1,3 +1,9 @@
 <h1>
 	Home Content
 </h1>
+
+<section>
+    <% if @posts.any?%>
+      <%= render 'posts/index' %>
+    <% end %>
+ </section>
