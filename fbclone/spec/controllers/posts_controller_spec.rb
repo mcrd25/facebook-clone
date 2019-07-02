@@ -302,23 +302,31 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+
+    let!(:other_user) { FactoryBot.create(:user) }
+    let!(:one_post) { FactoryBot.create(:post, user: other_user) }
+
     context 'when logged in' do
-      before do 
-        sign_in a_user
-      end 
+    
       context 'as an authorized user' do
+
+        before do 
+          sign_in other_user
+        end 
+
         it 'deletes the post' do
-          expect { delete :destroy, params: { username: a_user.username, id: a_post.id } }.to change(a_user.posts, :count).by(-1)
+          expect { delete :destroy, params: { username: other_user.username, id: one_post.id } }.to change(other_user.posts, :count).by(-1)
         end
 
         it 'redirects to profile_posts_path' do
-          delete :destroy, params: { username: a_user.username, id: a_post.id }
+          delete :destroy, params: { username: other_user.username, id: one_post.id }
           expect(response).to redirect_to(profile_posts_path)
         end
       end
+
       context 'as an unauthorized user' do
         it 'does not delete the post' do
-          expect { delete :destroy, params: {username: other.username, id: other_post.id } }.to_not change(other.posts, :count)
+          expect { delete :destroy, params: {username: other.username, id: other_post.id } }.to_not change(other_user.posts, :count)
         end
       end
     end

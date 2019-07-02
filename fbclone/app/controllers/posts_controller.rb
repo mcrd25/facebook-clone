@@ -19,7 +19,7 @@ class PostsController < ApplicationController
       if @post.save
         redirect_to profile_posts_path
       else
-        render 'new'
+        render :new
       end
     else
       redirect_to profile_posts_path
@@ -38,17 +38,16 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to profile_posts_path
     else
-      render 'edit'
+      render :edit
     end
   end
 
 
   def destroy
-    if post_owner?
-      @post.destroy
-      redirect_to some_url profile_posts_path
+    if post_owner? && @post.destroy
+      redirect_to profile_posts_path
     else
-      render 'index'
+      render :index
     end
   end
 
