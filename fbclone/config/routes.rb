@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :edit], path: '/:username' do 
     resources :posts
-    resources :friend_requests, only: [:create]
+    resources :friend_requests, only: [:create, :destroy]
   end
 
   namespace :friends do

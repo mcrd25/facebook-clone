@@ -9,11 +9,9 @@ class FriendRequestsController < ApplicationController
   end
 
   def destroy
-  end
-
-  private 
-
-  def request_params
-    #params.require(:friend_request).permit(:requester_id, :requestee_id)
+    if user_signed_in?
+      @friend_request = FriendRequest.find_by(id: params[:id])
+      @friend_request.destroy if current_user == @friend_request.requester || current_user == @friend_request.requestee
+    end
   end
 end
