@@ -45,10 +45,9 @@ class PostsController < ApplicationController
 
   def destroy
     if post_owner? && @post.destroy
-      redirect_to profile_posts_path
-    else
-      redirect_to profile_posts_path
+      # corresponding flash message for view
     end
+    redirect_to profile_posts_path
   end
 
   private 
