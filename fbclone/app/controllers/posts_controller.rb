@@ -47,7 +47,7 @@ class PostsController < ApplicationController
     if post_owner? && @post.destroy
       redirect_to profile_posts_path
     else
-      render :index
+      redirect_to profile_posts_path
     end
   end
 

@@ -305,14 +305,15 @@ RSpec.describe PostsController, type: :controller do
 
     let!(:other_user) { FactoryBot.create(:user) }
     let!(:one_post) { FactoryBot.create(:post, user: other_user) }
+    let!(:another_user) { FactoryBot.create(:user) }
+    let!(:deleted_post) { FactoryBot.create(:post, user: another_user) }
 
     context 'when logged in' do
+      before do 
+        sign_in other_user
+      end 
     
       context 'as an authorized user' do
-
-        before do 
-          sign_in other_user
-        end 
 
         it 'deletes the post' do
           expect { delete :destroy, params: { username: other_user.username, id: one_post.id } }.to change(other_user.posts, :count).by(-1)
@@ -326,8 +327,27 @@ RSpec.describe PostsController, type: :controller do
 
       context 'as an unauthorized user' do
         it 'does not delete the post' do
-          expect { delete :destroy, params: {username: other.username, id: other_post.id } }.to_not change(other_user.posts, :count)
+          expect { delete :destroy, params: {username: another_user.username, id: deleted_post.id } }.to_not change(another_user.posts, :count)
         end
+      end
+    end
+
+    context 'when not logged in' do
+      it 'fails to delete post' do
+        post_params = FactoryBot.attributes_for(:post, user_id: a_user.id)
+        expect { delete :destroy, params: { username: another_user.username, id: deleted_post.id } }.to_not change(another_user.posts, :count)
+      end
+
+      it 'responds with 302' do
+        post_params = FactoryBot.attributes_for(:post)
+        delete :destroy, params: { username: another_user.username, id: deleted_post.id }
+        expect(response).to have_http_status('302')
+      end
+
+      it 'redirects to profile_posts_path' do
+        post_params = FactoryBot.attributes_for(:post)
+        delete :destroy, params: { username: another_user.username, id: deleted_post.id }
+        expect(response).to redirect_to(profile_posts_path)
       end
     end
   end
