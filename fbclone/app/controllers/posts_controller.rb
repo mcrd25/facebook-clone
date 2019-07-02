@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, except: [:new, :create]
+  before_action :set_user, only: [:index]
 	
   def index
+    @posts = @user.posts if from_profile
   end
 
   def show
@@ -67,4 +69,12 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:message)
   end
+
+   def set_user
+    @user = User.find_by(username: params[:username])
+   end
+
+   def from_profile
+    if params[:username]
+   end
 end
