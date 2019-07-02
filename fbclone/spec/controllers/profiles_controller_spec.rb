@@ -92,18 +92,20 @@ RSpec.describe ProfilesController, type: :controller do
       end
 
       context 'when editing his own profile' do 
-        it 'responds succesfully' do 
+        
+        before do
           get :edit, params: { username: user.username }
+        end
+
+        it 'responds succesfully' do 
           expect(response).to be_successful
         end
 
         it 'responds with 200' do 
-          get :edit, params: { username: user.username }
           expect(response).to have_http_status '200'
         end
 
         it 'renders :edit template' do 
-          get :edit, params: { username: user.username }
           expect(response).to render_template(:edit)
         end
       end
