@@ -3,7 +3,13 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :edit], path: '/:username' do 
     resources :posts
+    resources :friend_requests, only: [:create, :destroy]
   end
+
+  namespace :friends do
+	 resources :sent_requests
+	 resources :received_requests
+	end
 
   root 'home#index'
 end
