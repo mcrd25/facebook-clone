@@ -1,4 +1,4 @@
-class Friends::ReceivedRequestsController < ApplicationController
+class Requests::ReceivedRequestsController < ApplicationController
 
 	def index
 		redirect_to(root_path) if not_signed_in? 

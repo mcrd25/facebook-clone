@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Friends::SentRequestsController, type: :controller do
+RSpec.describe Requests::SentRequestsController, type: :controller do
 
 	describe 'GET index' do
 		let(:a_user) { FactoryBot.create(:user) }
