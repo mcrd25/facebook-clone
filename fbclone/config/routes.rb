@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 	end
 
   resources :friendships, only: [:create, :destroy]
+  resources :likes, only: [:create, :destroy]
 
   root 'home#index'
 end
