@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'friendships/create'
+  get 'friendships/destroy'
   devise_for :users
 
   resource :profile, only: [:show, :edit], path: '/:username' do 
@@ -11,6 +13,8 @@ Rails.application.routes.draw do
 	 resources :sent_requests
 	 resources :received_requests
 	end
+
+  resources :friendships, only: [:create, :destroy]
 
   root 'home#index'
 end
