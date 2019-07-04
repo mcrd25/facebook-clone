@@ -33,59 +33,22 @@ RSpec.describe FriendsController, type: :controller do
       context 'when not authorised' do 
         before do 
           sign_in stranger
+          get :index, params: { username: a_user.username }
         end
 
-        it 'does not respond succesfully' do 
-          skip
+        it 'redirects to profile_path' do 
+          expect(response).to redirect_to(profile_path(a_user.username))
         end
       end
     end
 
     context 'when not logged in' do 
-      skip
-    end
-  end
-
-  describe 'POST create' do
-
-    context 'when logged in' do 
-
       before do 
-        sign_in a_user
+        get :index, params: { username: a_user.username }
       end
-
-      context 'when authorised' do 
-        skip
+      it 'redirects to profile_path' do 
+        expect(response).to redirect_to(profile_path(a_user.username))
       end
-
-      context 'when not authorised' do 
-        skip
-      end
-    end
-
-    context 'when not logged in' do 
-    end
-  end
-
-  describe 'DELETE destroy' do
-
-    context 'when logged in' do 
-
-      before do 
-        sign_in a_user
-      end
-
-      context 'when authorised' do 
-        skip
-      end
-
-      context 'when not authorised' do 
-        skip
-      end
-    end
-
-    context 'when not logged in' do 
-      skip
     end
   end
 end
