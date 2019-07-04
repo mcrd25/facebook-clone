@@ -9,6 +9,10 @@ module UserStatus
   	current_user != @user
   end
 
+  def is_current_user?
+    current_user == @user
+  end
+
   def not_signed_in?
     !user_signed_in?
   end
