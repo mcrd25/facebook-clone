@@ -14,6 +14,4 @@ class FriendsController < ApplicationController
   def is_a_friend?
   	@user.friends.include?(current_user)
   end
-
-
 end
