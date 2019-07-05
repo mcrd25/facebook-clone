@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :friendships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
+  resources :comments, only: [:create, :edit, :update]
 
   root 'home#index'
 end
