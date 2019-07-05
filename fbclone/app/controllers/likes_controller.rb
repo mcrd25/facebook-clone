@@ -11,7 +11,7 @@ class LikesController < ApplicationController
   end
 
   def destroy 
-    @like.destroy if is_like_owner?
+    @like.destroy if is_like_owner? && user_signed_in?
   end
 
   private

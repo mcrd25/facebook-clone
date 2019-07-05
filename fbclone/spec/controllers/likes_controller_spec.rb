@@ -48,21 +48,21 @@ RSpec.describe LikesController, type: :controller do
     context 'when user is logged in' do
 
       before do 
-        sign_in user
+        
         thumbs_down.save
       end
 
       context 'when authorised' do 
         it 'destroys a post like' do 
-          p "#{unliked_post.likes.inspect}"
-          p "#{other.likes.inspect}"
+          sign_in other
           expect { delete :destroy, params: { id: thumbs_down.id } }.to change(unliked_post.likes, :count).by(-1)
         end
       end
 
       context 'when not authorised' do 
-        skip it 'does not destroy a like if not like owner' do 
-          expect { delete :destroy, params: { id: thumbs_down.id } }.to change(unliked_post.likes, :count).by(-1)
+        it 'does not destroy a like if not like owner' do 
+          sign_in user
+          expect { delete :destroy, params: { id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
         end
       end
     end
@@ -74,8 +74,8 @@ RSpec.describe LikesController, type: :controller do
         thumbs_down.save
       end
 
-      skip it 'does not destroy a like' do 
-        expect { delete :destroy, params: { like_id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
+      it 'does not destroy a like' do 
+        expect { delete :destroy, params: { id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
       end
     end
   end
