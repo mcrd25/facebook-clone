@@ -21,7 +21,7 @@ class LikesController < ApplicationController
   end
 
   def find_like
-    @like = Like.find(params[:like_id])
+    @like = Like.find(params[:id])
   end
 
   def is_like_owner?

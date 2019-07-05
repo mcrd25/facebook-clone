@@ -60,10 +60,12 @@ RSpec.describe FriendshipsController, type: :controller do
 
     context 'when not logged in' do 
       it 'does not destroy friendship of active_friend' do
+        befriended.save
         expect { delete :destroy, params: { id: befriended.id } }.to_not change(active_friend.active_friends, :count)
       end
 
       it 'does not destroy friendship of passive_friend' do
+        befriended.save
         expect { delete :destroy, params: { id: befriended.id } }.to_not change(a_user.passive_friends, :count)
       end
     end
