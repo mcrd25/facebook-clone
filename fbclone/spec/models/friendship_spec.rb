@@ -19,13 +19,13 @@
 require 'rails_helper'
 
 RSpec.describe Friendship, type: :model do
-  let(:friendship) { FactoryBot.create(:friendship) }
+  let!(:friendship) { FactoryBot.create(:friendship) }
 
-  let(:ilegal_friendship) { FactoryBot.build(:ilegal_friendship) }
-  let(:legal_friendship) { FactoryBot.build(:legal_friendship) }
+  let!(:ilegal_friendship) { FactoryBot.build(:ilegal_friendship) }
+  let!(:legal_friendship) { FactoryBot.build(:legal_friendship) }
 
-  let(:fr_ilegal_active_friend) { FactoryBot.build(:fr_ilegal_active_friend) }
-  let(:fr_ilegal_passive_friend) { FactoryBot.build(:fr_ilegal_passive_friend) }
+  let!(:fr_ilegal_active_friend) { FactoryBot.build(:fr_ilegal_active_friend) }
+  let!(:fr_ilegal_passive_friend) { FactoryBot.build(:fr_ilegal_passive_friend) }
   
 
   describe 'test for presense of model attributes' do

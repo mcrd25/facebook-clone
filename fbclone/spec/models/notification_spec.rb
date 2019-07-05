@@ -17,9 +17,9 @@
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
-  let(:notification) { FactoryBot.build(:notification) }
-  let(:like_notification) { FactoryBot.create(:notification, :for_like) }
-  let(:comment_notification) { FactoryBot.create(:notification, :for_comment) }
+  let!(:notification) { FactoryBot.build(:notification) }
+  let!(:like_notification) { FactoryBot.create(:notification, :for_like) }
+  let!(:comment_notification) { FactoryBot.create(:notification, :for_comment) }
   let(:status) { ['Read', 'Unread'][rand(0..1)] }
 
   let(:ilegal_like) { Like.count.nil? ? 1 : Like.count + 1 }
