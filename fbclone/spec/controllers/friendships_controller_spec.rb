@@ -46,10 +46,7 @@ RSpec.describe FriendshipsController, type: :controller do
       context 'when authorised' do 
 
         it 'destroys friendship to active friend' do
-          # p "#{active_friend.friends}"
-          # p "#{active_friend.active_friends}" 
           expect { delete :destroy, params: { id: befriended.id } }.to change(active_friend.active_friends, :count).by(-1)
-
         end
 
         it 'destroys friendship to passive friend' do
