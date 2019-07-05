@@ -1,18 +1,40 @@
 class CommentsController < ApplicationController
-  before_action :find_comment, only: [:edit, :update]
+  before_action :find_comment, only: [:edit, :update, :destroy]
 
   def create 
-    @comment = Comment.new(post_id: params[:post_id], user_id: params[:user_id], message: params[:message])
-    @comment.save
+    # @comment = Comment.new(post_id: params[:post_id], user: current_user, message: params[:message])
+    # @comment.save
+    if user_signed_in?
+      @comment = Comment.new(comment_params)
+      @comment.user_id = current_user.id
+      @comment.post_id = params[:post_id]
+      if @comment.save
+        # appropriate flash message should be rendered
+      else
+        redirect_to profile_posts_path
+      end
+    else
+      redirect_to profile_posts_path
+    end
   end
 
   def edit
-    render status: :unauthorized if not_comment_owner?
+    if not_comment_owner?
+      redirect_to profile_post_path
+      render status: :unauthorized 
+    end
   end
 
   def update 
     render status: :unauthorized if not_comment_owner?
     @comment.update(comment_params) if is_comment_owner?
+  end
+
+  def destroy
+    if is_comment_owner? && @comment.destroy
+      # corresponding flash message for view
+    end
+    redirect_to profile_posts_path
   end
 
   private 

@@ -1,11 +1,10 @@
 class LikesController < ApplicationController
-  before_action :find_post, only: [:create]
   before_action :find_like, only: [:destroy]
 
 
   def create
     if user_signed_in?
-      @like = Like.new(post: @post, user: current_user)
+      @like = Like.new(post_id: params[:post_id], user: current_user)
       @like.save
     end 
   end
@@ -16,9 +15,6 @@ class LikesController < ApplicationController
 
   private
 
-  def find_post
-    @post = Post.find(params[:post_id])
-  end
 
   def find_like
     @like = Like.find(params[:id])

@@ -18,7 +18,7 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:comment) { FactoryBot.create(:comment) }
+  let!(:comment) { FactoryBot.create(:comment) }
 
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
   let(:ilegal_post) { Post.count.nil? ? 1 : Post.count + 1 }

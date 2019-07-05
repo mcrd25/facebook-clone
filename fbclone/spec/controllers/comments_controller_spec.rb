@@ -6,6 +6,9 @@ RSpec.describe CommentsController, type: :controller do
   let!(:commented_post) { FactoryBot.create(:post, user: user) }
   let!(:comment) { FactoryBot.create(:comment, post_id: commented_post.id, user_id: user.id) }
 
+  # build
+  let(:deleted_comment) { FactoryBot.build(:comment, post_id: commented_post.id, user_id: user.id) }
+
   describe 'GET edit' do 
 
     context 'when user is logged in' do 
@@ -15,7 +18,7 @@ RSpec.describe CommentsController, type: :controller do
 
         before do 
           sign_in user 
-          get :edit, params: { id: comment.id }  
+          get :edit, params: { username: user.username, post_id: commented_post.id, id: comment.id }  
         end
 
         it 'responds http status 2xx' do 
@@ -33,24 +36,19 @@ RSpec.describe CommentsController, type: :controller do
 
 
       context 'when not authorised' do 
-
         before do
           sign_in stranger 
-          get :edit, params: { id: comment.id } 
+          get :edit, params: { username: user.username, post_id: commented_post.id, id: comment.id } 
         end
 
         it 'responds http status 401 unauthorised' do 
           expect(response).to_not have_http_status(:unauthorized)
         end
-
-        skip it 'does not render :edit' do 
-          expect(response).to_not render_template(:edit)
-        end
       end
     end
   end
 
-  describe 'PATCH update' do 
+  describe 'PATCH update' do
     let(:new_msg) { 'Hello Rspec!' }
 
     context 'when logged in' do 
@@ -63,7 +61,7 @@ RSpec.describe CommentsController, type: :controller do
         before do
           sign_in user 
           comment_params = FactoryBot.attributes_for(:comment, message: new_msg)
-          patch :update, params: { id: comment.id, comment: comment_params }
+          patch :update, params: {username: user.username, post_id: commented_post.id, id: comment.id, comment: comment_params }
         end   
 
         it 'updates message succesfully' do 
@@ -75,7 +73,7 @@ RSpec.describe CommentsController, type: :controller do
         before do
           sign_in stranger 
           comment_params = FactoryBot.attributes_for(:comment, message: new_msg)
-          patch :update, params: { id: comment.id, comment: comment_params }
+          patch :update, params: {username: user.username, post_id: commented_post.id, id: comment.id, comment: comment_params }
         end   
 
         it 'responds http status 401 unauthorised' do 
@@ -91,7 +89,7 @@ RSpec.describe CommentsController, type: :controller do
     context 'when not logged in' do 
       it 'does not update message' do 
         comment_params = FactoryBot.attributes_for(:comment, message: new_msg)
-        patch :update, params: { id: comment.id, comment: comment_params }
+        patch :update, params: {username: user.username, post_id: commented_post.id, id: comment.id, comment: comment_params }
         expect(comment.reload.message).to_not eq(new_msg)
       end
     end
@@ -100,7 +98,7 @@ RSpec.describe CommentsController, type: :controller do
   describe 'POST create' do 
     let(:new_msg) { 'Hello Rspec!' }
 
-    context 'when user is logged in' do 
+    context 'when user is logged in' do
 
       before do 
         sign_in user
@@ -109,58 +107,65 @@ RSpec.describe CommentsController, type: :controller do
       context 'when authorised' do 
 
         it 'responds http status success' do 
-          post :create, params: { post_id: commented_post.id, user_id: user.id }
+          comment_params = FactoryBot.attributes_for(:comment)
+          post :create, params: {username: user.username, post_id: commented_post.id, comment: comment_params }
           expect(response).to have_http_status(:success)
         end
 
         it 'creates a post comment' do 
-          comment_params = { message: new_msg, post_id: commented_post.id, user_id: commented_post.user_id }
-          expect { post :create, params: { comment: comment_params } }.to change(commented_post.comments, :count).by(1)
+          comment_params = FactoryBot.attributes_for(:comment)
+          expect { post :create, params: {username: user.username, post_id: commented_post.id, comment: comment_params } }.to change(commented_post.comments, :count).by(1)
         end
       end
     end
 
     context 'when user is logged out' do 
 
-      skip it 'does not create a post like' do 
-        expect { }.to_not change(commented_post.comments, :count)
+      it 'does not create a post comment' do 
+        expect { post :create, params: { username: user.username, post_id: commented_post.id } }.to_not change(commented_post.comments, :count)
       end
     end
 
   end
 
-  # describe 'DELETE destroy' do 
+  describe 'DELETE destroy' do 
 
-  #   context 'when user is logged in' do
+    context 'when user is logged in' do
 
-  #     before do 
-        
-  #     end
+      before do 
+        deleted_comment.save
+      end
 
-  #     context 'when authorised' do 
-  #       skip it 'destroys a post like' do 
-  #         sign_in other
-  #         expect {  }.to change(, :count).by(-1)
-  #       end
-  #     end
+      context 'when authorised' do 
+        it 'destroys a post comment' do 
+          sign_in user
+          expect { delete :destroy,
+            params: { username: user.username, post_id: commented_post.id, id: deleted_comment.id }
+          }.to change(commented_post.comments, :count).by(-1)
+        end
+      end
 
-  #     context 'when not authorised' do 
-  #       skip it 'does not destroy a like if not like owner' do 
-  #         sign_in user
-  #         expect {  }.to_not change(, :count)
-  #       end
-  #     end
-  #   end
+      context 'when not authorised' do 
+        it 'does not destroy a like if not like owner' do 
+          sign_in stranger
+          expect { delete :destroy,
+            params: { username: user.username, post_id: commented_post.id, id: deleted_comment.id }
+          }.to_not change(commented_post.comments, :count)
+        end
+      end
+    end
 
-  #   context 'when user is logged out' do 
+    context 'when user is logged out' do 
       
-  #     before do 
+      before do 
+        deleted_comment.save
+      end
 
-  #     end
-
-  #     skip it 'does not destroy a like' do 
-  #       expect {  }.to_not change(, :count)
-  #     end
-  #   end
-  # end
+      it 'does not destroy a like' do 
+        expect { delete :destroy,
+          params: { username: user.username, post_id: commented_post.id, id: deleted_comment.id }
+        }.to_not change(commented_post.comments, :count)
+      end
+    end
+  end
 end

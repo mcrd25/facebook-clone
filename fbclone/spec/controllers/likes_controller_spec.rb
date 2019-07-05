@@ -24,26 +24,26 @@ RSpec.describe LikesController, type: :controller do
       context 'when authorised' do 
 
         it 'responds http status success' do 
-          post :create, params: { post_id: liked_post.id } 
+          post :create, params: { username: user.username, post_id: liked_post.id } 
           expect(response).to have_http_status(:success)
         end
 
         it 'creates a post like' do 
-          expect { post :create, params: { post_id: liked_post.id } }.to change(liked_post.likes, :count).by(1)
+          expect { post :create, params: { username: user.username, post_id: liked_post.id } }.to change(liked_post.likes, :count).by(1)
         end
       end
     end
 
     context 'when user is logged out' do 
-
       it 'does not create a post like' do 
-        expect { post :create, params: { post_id: liked_post.id } }.to_not change(user.likes, :count)
+        expect { post :create, params: { username: user.username, post_id: liked_post.id } }.to_not change(user.likes, :count)
       end
     end
 
   end
 
   describe 'DELETE destroy' do 
+    
 
     context 'when user is logged in' do
 
@@ -55,14 +55,14 @@ RSpec.describe LikesController, type: :controller do
       context 'when authorised' do 
         it 'destroys a post like' do 
           sign_in other
-          expect { delete :destroy, params: { id: thumbs_down.id } }.to change(unliked_post.likes, :count).by(-1)
+          expect { delete :destroy, params: { username: user.username, post_id: unliked_post.id, id: thumbs_down.id } }.to change(unliked_post.likes, :count).by(-1)
         end
       end
 
       context 'when not authorised' do 
         it 'does not destroy a like if not like owner' do 
           sign_in user
-          expect { delete :destroy, params: { id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
+          expect { delete :destroy, params: { username: user.username, post_id: unliked_post.id, id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
         end
       end
     end
@@ -75,7 +75,7 @@ RSpec.describe LikesController, type: :controller do
       end
 
       it 'does not destroy a like' do 
-        expect { delete :destroy, params: { id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
+        expect { delete :destroy, params: { username: user.username, post_id: unliked_post.id, id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
       end
     end
   end

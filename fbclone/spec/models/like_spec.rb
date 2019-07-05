@@ -13,7 +13,7 @@ require 'rails_helper'
 
 RSpec.describe Like, type: :model do
   
-  let(:like) { FactoryBot.create(:like) }
+  let!(:like) { FactoryBot.create(:like) }
 
   let(:legal_user) { User.first }
   let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }

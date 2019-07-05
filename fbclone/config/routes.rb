@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   resource :profile, only: [:show, :edit], path: '/:username' do 
-    resources :posts
+    resources :posts do
+      resources :likes, only: [:create, :destroy]
+      resources :comments, only: [:create, :edit, :update, :destroy]
+    end
     resources :friend_requests, only: [:create, :destroy]
     resources :friends, only: [:index]
   end
@@ -13,8 +16,7 @@ Rails.application.routes.draw do
 	end
 
   resources :friendships, only: [:create, :destroy]
-  resources :likes, only: [:create, :destroy]
-  resources :comments, only: [:create, :edit, :update]
+  
 
   root 'home#index'
 end
