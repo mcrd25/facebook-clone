@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NotificationsController, type: :controller do
+
 	describe 'GET index' do
 		let(:user) { FactoryBot.create(:user) }
 		context 'when user is logged in' do 
