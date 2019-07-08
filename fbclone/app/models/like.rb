@@ -17,4 +17,17 @@ class Like < ApplicationRecord
   belongs_to :user
 
   has_many :notifications, :as => :notifiable, dependent: :destroy
+
+  after_create :find_post, :create_notification
+
+  def create_notification
+    notification = Notification.new(notifiable_type: 'Like', notifiable_id: id, user_id: @post.user_id)
+    notification.save
+  end
+
+  private 
+
+  def find_post
+    @post = Post.find(post_id)
+  end
 end

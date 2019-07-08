@@ -116,6 +116,11 @@ RSpec.describe CommentsController, type: :controller do
           comment_params = FactoryBot.attributes_for(:comment)
           expect { post :create, params: {username: user.username, post_id: commented_post.id, comment: comment_params } }.to change(commented_post.comments, :count).by(1)
         end
+
+        it 'creates associated notification' do 
+          comment_params = FactoryBot.attributes_for(:comment)
+          expect { post :create, params: {username: user.username, post_id: commented_post.id, comment: comment_params } }.to change(Notification, :count).by(1)
+        end
       end
     end
 
@@ -142,6 +147,11 @@ RSpec.describe CommentsController, type: :controller do
           expect { delete :destroy,
             params: { username: user.username, post_id: commented_post.id, id: deleted_comment.id }
           }.to change(commented_post.comments, :count).by(-1)
+        end
+
+        it 'destroys associated notification' do 
+          sign_in user
+          expect { delete :destroy, params: { username: user.username, post_id: commented_post.id, id: deleted_comment.id } }.to change(Notification, :count).by(-1)
         end
       end
 

@@ -29,7 +29,6 @@ require 'faker'
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.build(:user) }
   let(:user2) { FactoryBot.build(:user) }
-  # let(:user3) { FactoryBot.create(:user) }
   
   describe 'test for presence of model attributes for' do
     describe 'general expected attributes' do 

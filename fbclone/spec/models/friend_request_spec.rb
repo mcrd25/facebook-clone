@@ -106,20 +106,4 @@ RSpec.describe FriendRequest, type: :model do
       end
     end
    end
-
-  describe ' Constraints' do 
-    context 'when friend_request is created with requester_id that does not exist' do 
-      it 'should raise user must exist error' do
-        fr_ilegal_requester.valid?
-        expect(fr_ilegal_requester.errors[:requester]).to include("must exist")
-      end
-    end 
-
-    context 'when friend_request is created with requestee_id that does not exist' do 
-      it 'should raise user must exist error' do
-        fr_ilegal_requestee.valid?
-        expect(fr_ilegal_requestee.errors[:requestee]).to include("must exist")
-      end
-    end 
-  end
 end

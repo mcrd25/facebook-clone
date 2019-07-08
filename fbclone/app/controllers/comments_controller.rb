@@ -2,8 +2,6 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:edit, :update, :destroy]
 
   def create 
-    # @comment = Comment.new(post_id: params[:post_id], user: current_user, message: params[:message])
-    # @comment.save
     if user_signed_in?
       @comment = Comment.new(comment_params)
       @comment.user_id = current_user.id

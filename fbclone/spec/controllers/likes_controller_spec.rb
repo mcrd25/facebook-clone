@@ -5,12 +5,13 @@ RSpec.describe LikesController, type: :controller do
   # create
   let!(:user) { FactoryBot.create(:user) }
   let!(:other) { FactoryBot.create(:user) }
+  let!(:stranger) { FactoryBot.create(:user) }
   let!(:liked_post) { FactoryBot.create(:post, user_id: user.id) }
   let!(:unliked_post) { FactoryBot.create(:post, user_id: other.id) }
 
   # build
   let(:thumbs_up) { FactoryBot.build(:like, post: liked_post, user: other) }
-  let(:thumbs_down) { FactoryBot.build(:like, post: unliked_post, user: other) }
+  let(:thumbs_down) { FactoryBot.build(:like, post: unliked_post, user: user) }
 
 
   describe 'POST create' do 
@@ -31,6 +32,10 @@ RSpec.describe LikesController, type: :controller do
         it 'creates a post like' do 
           expect { post :create, params: { username: user.username, post_id: liked_post.id } }.to change(liked_post.likes, :count).by(1)
         end
+
+        it 'creates associated notification' do 
+          expect { post :create, params: { username: user.username, post_id: liked_post.id } }.to change(Notification, :count).by(1)
+        end
       end
     end
 
@@ -47,22 +52,25 @@ RSpec.describe LikesController, type: :controller do
 
     context 'when user is logged in' do
 
-      before do 
-        
-        thumbs_down.save
-      end
-
       context 'when authorised' do 
         it 'destroys a post like' do 
-          sign_in other
-          expect { delete :destroy, params: { username: user.username, post_id: unliked_post.id, id: thumbs_down.id } }.to change(unliked_post.likes, :count).by(-1)
+          sign_in user
+          thumbs_down.save
+          expect { delete :destroy, params: { username: other.username, post_id: thumbs_down.post_id, id: thumbs_down.id } }.to change(Like, :count).by(-1)
+        end
+
+        it 'destroys associated notification' do 
+          sign_in user
+          thumbs_down.save
+          expect { delete :destroy, params: { username: other.username, post_id: thumbs_down.post_id, id: thumbs_down.id} }.to change(Notification, :count).by(-1)
         end
       end
 
       context 'when not authorised' do 
         it 'does not destroy a like if not like owner' do 
-          sign_in user
-          expect { delete :destroy, params: { username: user.username, post_id: unliked_post.id, id: thumbs_down.id } }.to_not change(unliked_post.likes, :count)
+          sign_in stranger
+          thumbs_down.save
+          expect { delete :destroy, params: { username: other.username, post_id: thumbs_down.post_id, id: thumbs_down.id } }.to_not change(Like, :count)
         end
       end
     end

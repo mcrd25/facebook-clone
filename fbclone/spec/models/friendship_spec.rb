@@ -93,20 +93,4 @@ RSpec.describe Friendship, type: :model do
       end 
     end
   end
-
-  describe ' Constraints' do 
-    context 'when friendship is created with requester_id that does not exist' do 
-      it 'should raise user must exist error' do
-        fr_ilegal_active_friend.valid?
-        expect(fr_ilegal_active_friend.errors[:active_friend]).to include("must exist")
-      end
-    end 
-
-    context 'when friendship is created with requester_id that does not exist' do 
-      it 'should raise user must exist error' do
-        fr_ilegal_passive_friend.valid?
-        expect(fr_ilegal_passive_friend.errors[:passive_friend]).to include("must exist")
-      end
-    end 
-  end
 end

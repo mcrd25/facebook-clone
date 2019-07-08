@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 	end
 
   resources :friendships, only: [:create, :destroy]
+
+  resources :notifications, only: [:index]
   
 
   root 'home#index'
