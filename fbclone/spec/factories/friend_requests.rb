@@ -17,26 +17,12 @@
 
 FactoryBot.define do
   factory :friend_request do
-    association :requester
-    association :requestee
+    association :requester, factory: :user
+    association :requestee, factory: :user
 
     factory :legal_friend_request do 
-      requester {  User.create!(
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        email: Faker::Internet.email,
-        password: 'test123',
-        birth_date: Faker::Date.birthday,
-        gender: Faker::Gender.binary_type
-      ) }
-      requestee {  User.create!(
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        email: Faker::Internet.email,
-        password: 'test123',
-        birth_date: Faker::Date.birthday,
-        gender: Faker::Gender.binary_type
-      ) }
+      requester { FactoryBot.create(:user) }
+      requestee { FactoryBot.create(:user) }
     end
 
     factory :ilegal_friend_request do 
@@ -44,37 +30,23 @@ FactoryBot.define do
       requestee { FriendRequest.first.requester }      
     end
 
-    factory :fr_ilegal_requester do 
+    # factory :fr_ilegal_requester do 
 
-      requester_id { User.first.nil? ? 1 : User.count + 1}
-      if User.first.nil?
-        requestee { User.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      email: Faker::Internet.email,
-      password: 'test123',
-      birth_date: Faker::Date.birthday,
-      gender: Faker::Gender.binary_type
-      ) }
-      else
-        requestee { User.first }
-      end
-    end
+    #   requester_id { FactoryBot.create(:user).id + 1 }
+    #   if User.first.nil?
+    #     requestee { FactoryBot.create(:user) }
+    #   else
+    #     requestee { User.first }
+    #   end
+    # end
 
-    factory :fr_ilegal_requestee do 
-      requestee_id { User.first.nil? ? 1 : User.count + 1}
-      if User.first.nil?
-        requester { User.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      email: Faker::Internet.email,
-      password: 'test123',
-      birth_date: Faker::Date.birthday,
-      gender: Faker::Gender.binary_type
-      ) }
-      else
-        requester { User.first }
-      end
-    end
+    # factory :fr_ilegal_requestee do 
+    #   requestee_id { FactoryBot.create(:user).id + 1 }
+    #   if User.first.nil?
+    #     requester { FactoryBot.create(:user) }
+    #   else
+    #     requester { User.first }
+    #   end
+    # end
   end
 end
