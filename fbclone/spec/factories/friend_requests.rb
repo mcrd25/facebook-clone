@@ -19,7 +19,7 @@ FactoryBot.define do
   factory :friend_request do
     association :requester
     association :requestee
-    
+
     factory :legal_friend_request do 
       requester { FactoryBot.create(:user) }
       requestee { FactoryBot.create(:user) }
@@ -29,24 +29,5 @@ FactoryBot.define do
       requester { FriendRequest.first.requestee }
       requestee { FriendRequest.first.requester }      
     end
-
-    # factory :fr_ilegal_requester do 
-
-    #   requester_id { FactoryBot.create(:user).id + 1 }
-    #   if User.first.nil?
-    #     requestee { FactoryBot.create(:user) }
-    #   else
-    #     requestee { User.first }
-    #   end
-    # end
-
-    # factory :fr_ilegal_requestee do 
-    #   requestee_id { FactoryBot.create(:user).id + 1 }
-    #   if User.first.nil?
-    #     requester { FactoryBot.create(:user) }
-    #   else
-    #     requester { User.first }
-    #   end
-    # end
   end
 end

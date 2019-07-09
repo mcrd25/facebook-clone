@@ -24,9 +24,6 @@ RSpec.describe FriendRequest, type: :model do
   let!(:ilegal_friend_request) { FactoryBot.build(:ilegal_friend_request) }
   let!(:legal_friend_request) { FactoryBot.build(:legal_friend_request) }
 
-  let!(:fr_ilegal_requester) { FactoryBot.build(:fr_ilegal_requester) }
-  let!(:fr_ilegal_requestee) { FactoryBot.build(:fr_ilegal_requestee) }
-
   describe 'test for presense of model attributes' do
 
     context 'general expected attributes' do
