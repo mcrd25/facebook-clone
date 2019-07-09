@@ -17,8 +17,8 @@
 
 FactoryBot.define do
   factory :friendship do
-    association :active_friend, factory: :user
-    association :passive_friend, factory: :user
+    association :active_friend
+    association :passive_friend
 
     factory :legal_friendship do 
       active_friend {  User.create!(

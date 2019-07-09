@@ -17,9 +17,9 @@
 
 FactoryBot.define do
   factory :friend_request do
-    association :requester, factory: :user
-    association :requestee, factory: :user
-
+    association :requester
+    association :requestee
+    
     factory :legal_friend_request do 
       requester { FactoryBot.create(:user) }
       requestee { FactoryBot.create(:user) }
