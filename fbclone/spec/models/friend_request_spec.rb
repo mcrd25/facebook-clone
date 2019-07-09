@@ -19,10 +19,10 @@ require 'rails_helper'
 
 
 RSpec.describe FriendRequest, type: :model do
-	let!(:friend_request) { FactoryBot.create(:friend_request) }
+	let(:friend_request) { FactoryBot.create(:friend_request) }
 
-  let!(:ilegal_friend_request) { FactoryBot.build(:ilegal_friend_request) }
-  let!(:legal_friend_request) { FactoryBot.build(:legal_friend_request) }
+  let(:ilegal_friend_request) { FactoryBot.build(:ilegal_friend_request) }
+  let(:legal_friend_request) { FactoryBot.build(:legal_friend_request) }
 
   describe 'test for presense of model attributes' do
 
