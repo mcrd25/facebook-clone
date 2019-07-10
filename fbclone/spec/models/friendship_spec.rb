@@ -24,10 +24,6 @@ RSpec.describe Friendship, type: :model do
   let(:ilegal_friendship) { FactoryBot.build(:ilegal_friendship) }
   let(:legal_friendship) { FactoryBot.build(:legal_friendship) }
 
-  let(:fr_ilegal_active_friend) { FactoryBot.build(:fr_ilegal_active_friend) }
-  let(:fr_ilegal_passive_friend) { FactoryBot.build(:fr_ilegal_passive_friend) }
-  
-
   describe 'test for presense of model attributes' do
 
     context 'general expected attributes' do
@@ -92,21 +88,5 @@ RSpec.describe Friendship, type: :model do
         should belong_to(:active_friend) 
       end 
     end
-  end
-
-  describe ' Constraints' do 
-    context 'when friendship is created with requester_id that does not exist' do 
-      it 'should raise user must exist error' do
-        fr_ilegal_active_friend.valid?
-        expect(fr_ilegal_active_friend.errors[:active_friend]).to include("must exist")
-      end
-    end 
-
-    context 'when friendship is created with requester_id that does not exist' do 
-      it 'should raise user must exist error' do
-        fr_ilegal_passive_friend.valid?
-        expect(fr_ilegal_passive_friend.errors[:passive_friend]).to include("must exist")
-      end
-    end 
   end
 end

@@ -17,5 +17,9 @@ FactoryBot.define do
   factory :post do
     message { "MyText" }
     association :user
+
+    trait :invalid do
+      message { nil }
+    end
   end
 end

@@ -20,11 +20,6 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
   let(:comment) { FactoryBot.create(:comment) }
 
-  let(:ilegal_user) { User.count.nil? ? 1 : User.count + 1 }
-  let(:ilegal_post) { Post.count.nil? ? 1 : Post.count + 1 }
-
-  let(:comment_with_ilegal_user) { Comment.new(user_id: ilegal_user, post_id: Post.first.id, message: "Hello World") }
-  let(:comment_with_ilegal_post) { Comment.new(post_id: ilegal_post, user_id: User.first.id, message: "Hello World") }
 
   describe 'test for presence of model attributes' do
     context 'general expected attributes' do
@@ -126,21 +121,6 @@ RSpec.describe Comment, type: :model do
       it 'has a correct has_many association' do 
         should have_many(:notifications)
       end
-    end 
-  end
-
-  describe 'Constraints' do 
-    
-    context 'when comment is created with user that does not exist' do 
-      it 'should raise user must exist error' do 
-        expect { comment_with_ilegal_user.save! }.to  raise_error(ActiveRecord::RecordInvalid, 'Validation failed: User must exist')
-      end 
-    end 
-
-    context 'when comment is created with post that does not exist' do 
-      it 'should raise post must exist error' do 
-        expect { comment_with_ilegal_post.save! }.to  raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Post must exist')
-      end 
     end 
   end
 end
