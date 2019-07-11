@@ -11,8 +11,10 @@
  * It is generally better to create a new file per style scope.
  *
  */
- @import 'bootstrap';
- @import 'navbar';
+
+@import 'font_awesome5_webfont';
+@import 'bootstrap';
+@import 'navbar';
 
 $blue: #3c5a99;
 
@@ -29,8 +31,8 @@ $blue: #3c5a99;
   
 }
 
-.list-item {
-  list-style: none;
+.p-left {
+  font-size: 17px;
 }
 
 #title-left {
@@ -43,4 +45,16 @@ $blue: #3c5a99;
 
 #subtitle-right {
   font-size: 16px;
+}
+
+.gender-labels {
+  font-size: 18px;
+}
+
+#terms {
+  font-size: 11px;
+}
+
+#promo-text {
+  font-size: 13px;
 }
