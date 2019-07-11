@@ -1,4 +1,31 @@
-<h1>
-	New user / sign in
-	<%= render  'devise/registrations/reg_form' %>
-</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2 id="title-left">
+        Connect with friends and the world around you on Facebook.
+      </h2>
+      <div class="d-flex justify-content-start">
+        <ul class="list-wrapper d-flex flex-column">
+          <li class="list-item d-flex">
+            <div>ICON</div>
+            <p>See photos and updates from friends in News Feed.</p>
+          </li>
+          <li class="list-item d-flex">
+            <div>ICON</div>
+            <p>Share what's new in your life on your Timeline.</p>
+          </li>
+          <li class="list-item d-flex">
+            <div>ICON</div>
+            <p>Find more of what you're looking for with Facebook Search.</p>
+          </li>
+        </ul>        
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <h2 id="title-right">Create a New Account</h2>
+      <h3 id="subtitle-right">It's free and always will be.</h3>
+      <%= render  'devise/registrations/reg_form' %>
+      <p>Create a Page for a celebrity, band or business.</p>
+    </div>
+  </div>
+</div>
