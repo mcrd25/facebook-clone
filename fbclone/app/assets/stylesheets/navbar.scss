@@ -5,8 +5,16 @@
   font-size: 2rem;
 }
 
-#nav { 
+#login-nav { 
   height: 82px;
+}
+
+.nav-content {
+	width: 80%;
+}
+
+#main-nav {
+	height: 42px;
 }
 
 .login-submit {
@@ -25,4 +33,16 @@
 .login-field {
 	font-size: 12px;
 	line-height: 18px;
+}
+
+.nav-search, #search-append {
+	height: 23px;
+	line-height: 22px;
+	font-size: 14px;
+}
+
+.nav-search {
+	padding: 3px 5px;
+	border: none;
+	width: 388px !important;
 }
