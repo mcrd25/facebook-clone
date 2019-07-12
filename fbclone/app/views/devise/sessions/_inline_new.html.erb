@@ -1,10 +1,10 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div>
     <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'login-field' %>
     <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: "current-password" %>
-    <%= f.submit "Log in" %>
+    <%= f.password_field :password, autocomplete: 'current-password', class: 'login-field' %>
+    <%= f.submit 'Log in', class: 'login-submit ml-1' %>
   </div>
 
 <% end %>
