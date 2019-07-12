@@ -9,7 +9,12 @@
           </div>
         </div>
       </div>
-      <div  id="login-form" class="d-flex justify-content-end">
+      <div class="d-flex justify-content-end">
+        <%= link_to profile_path(current_user.username), class: 'nav-link' do %>
+          <span id="avatar" class="nav-text">
+          <%= current_user.first_name %>
+          </span>
+        <% end %>
         
       </div>
     </div>
