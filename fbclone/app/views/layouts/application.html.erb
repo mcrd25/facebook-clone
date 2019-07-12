@@ -10,7 +10,11 @@
   </head>
 
   <body>
-    <%= render 'layouts/partials/logged_out_header' %>
+    <% if user_signed_in? %>
+      <%= render 'layouts/partials/header' %>
+    <% else %>
+      <%= render 'layouts/partials/logged_out_header' %>
+    <% end %>
     <div class="container">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
