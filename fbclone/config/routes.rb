@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :notifications, only: [:index]
+
   resource :profile, only: [:show, :edit], path: '/:username' do 
     resources :posts do
       resources :likes, only: [:create, :destroy]
@@ -17,7 +19,7 @@ Rails.application.routes.draw do
 
   resources :friendships, only: [:create, :destroy]
 
-  resources :notifications, only: [:index]
+  
   
 
   root 'home#index'

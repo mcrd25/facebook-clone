@@ -10,7 +10,7 @@
 }
 
 .nav-content {
-	width: 80%;
+	width: 85%;
 }
 
 #main-nav {
@@ -45,6 +45,16 @@
 	padding: 3px 5px;
 	border: none;
 	width: 388px !important;
+}
+
+.log-out {
+	color: #111;
+}
+
+.log-out:hover {
+	color: #fff;
+	background-color: $blue2;
+	text-decoration: none;
 }
 
 .nav-txt, .nav-link, .nav-link:hover {

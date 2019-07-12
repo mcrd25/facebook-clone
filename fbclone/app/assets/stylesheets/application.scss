@@ -12,11 +12,13 @@
  *
  */
 
+ $blue: #3c5a99;
+ $blue2: #4267B2;
+
 @import 'font_awesome5_webfont';
 @import 'bootstrap';
 @import 'navbar';
 
-$blue: #3c5a99;
 
 .brand-bg {
 	background-color: $blue;
@@ -24,7 +26,7 @@ $blue: #3c5a99;
 }
 
 .brand-bg2 {
-  background-color: #4267B2;
+  background-color: $blue2;
   color: #fff;
 }
 
