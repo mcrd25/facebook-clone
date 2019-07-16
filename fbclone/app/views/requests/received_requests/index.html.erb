@@ -4,6 +4,11 @@
 		<%= link_to 'view sent requests', requests_sent_requests_path, class: 'request-link' %>
 	</div>
   <div class="card-body">
-    <%= render 'requests/received_requests/single_request'%>
+  	<% @requesters.each do |requester| %>
+  		<% @request = FriendRequest.where(["requester_id = ? and requestee_id = ?", requester.id, current_user.id]).pluck(:id).first %>
+  		<%= render 'requests/received_requests/single_request', user: requester, request: @request %>
+  		<hr class="my-3">
+  	<% end %>
+    
   </div>
 </div>

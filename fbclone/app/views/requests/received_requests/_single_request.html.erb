@@ -4,11 +4,14 @@
 	</div>
 	<div class="pl-3 d-flex justify-content-between request-details-block">
 		<div class="request-details d-flex">
-			<%=link_to 'person name', '#', class: 'request-name' %>
+			<%=link_to user.full_name, profile_path(user.username), class: 'request-name' %>
 		</div>
 		<div class="ml-2 confirmation d-flex align-items-center">
-			<%=link_to 'Confirm', '#', class: 'btn confirm-request' %>
-			<%=link_to 'Delete Request', '#', class: 'btn delete-request ml-2' %>
+			<%=link_to 'Confirm', friendships_path(active_friend_id: user.id), class: 'btn confirm-request',
+									method: :post %>
+			<%=link_to 'Delete Request', profile_friend_request_path(current_user.username, request),  class: 'btn delete-request ml-2',
+          		method: :delete,
+              data: { confirm: 'Are you sure?'} %>
 		</div>
 	</div>
 	

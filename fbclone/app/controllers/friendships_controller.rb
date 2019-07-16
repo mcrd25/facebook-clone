@@ -2,7 +2,13 @@ class FriendshipsController < ApplicationController
   def create
     if user_signed_in?
       @friendship = Friendship.new(active_friend_id: params[:active_friend_id], passive_friend_id: current_user.id)
-      @friendship.save
+      if @friendship.save
+        @request = FriendRequest.where(["requester_id = ? and requestee_id = ?", params[:active_friend_id], current_user.id]).first
+        @request.destroy
+        redirect_to requests_received_requests_path
+      else
+        redirect_to root_path
+      end
     end
   end
 
