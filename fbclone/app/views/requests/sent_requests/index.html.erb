@@ -1,3 +1,14 @@
-<h1>
-	Your Sent Requests
-</h1>
+<div class="card requests">
+	<div class="card-head">
+		<h2 class="mb-0 mx-2 mt-2">Friend Requests Sent</h2>
+		<%= link_to 'view received requests', requests_received_requests_path, class: 'request-link mx-2' %>
+	</div>
+  <div class="card-body">
+  	<% @requestees.each do |requestee| %>
+  		<% @request = FriendRequest.where(["requester_id = ? and requestee_id = ?", current_user.id, requestee.id]).pluck(:id).first %>
+  		<%= render 'requests/sent_requests/single_request', user: requestee, request: @request %>
+  		<hr class="my-3">
+  	<% end %>
+    
+  </div>
+</div>
