@@ -5,7 +5,7 @@ class FriendRequestsController < ApplicationController
     if user_signed_in?
       @friend_request = FriendRequest.new(requester: current_user, requestee: @user)
       @friend_request.save
-      redirect_to root_path
+      redirect_to profile_path(username: @user.username)
     end
   end
 
@@ -13,7 +13,11 @@ class FriendRequestsController < ApplicationController
     if user_signed_in?
       @friend_request = FriendRequest.find_by(id: params[:id])
       @friend_request.destroy if valid_request?
-      redirect_to requests_received_requests_path
+      if current_user == @friend_request.requestee
+        redirect_to requests_received_requests_path
+      else
+        redirect_to requests_sent_requests_path
+      end
     end
   end
 
