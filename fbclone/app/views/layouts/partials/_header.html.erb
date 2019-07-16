@@ -13,8 +13,10 @@
         </div>
       </div>
       <div class="d-flex justify-content-end">
+
         <%= link_to profile_path(current_user.username), class: 'nav-link' do %>
-          <span id="avatar" class="nav-text">
+          <%= gravatar_for(current_user, 'img-fluid round-avatar') %>
+          <span id="avatar" class="ml-1 nav-text">
             <%= current_user.first_name %>
           </span>
         <% end %>
