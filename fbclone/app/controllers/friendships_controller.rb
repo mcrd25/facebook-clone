@@ -3,8 +3,7 @@ class FriendshipsController < ApplicationController
     if user_signed_in?
       @friendship = Friendship.new(active_friend_id: params[:active_friend_id], passive_friend_id: current_user.id)
       if @friendship.save
-        @request = FriendRequest.where(["requester_id = ? and requestee_id = ?", params[:active_friend_id], current_user.id]).first
-        @request.destroy
+        delete_request
         redirect_to requests_received_requests_path
       else
         redirect_to root_path
@@ -23,5 +22,10 @@ class FriendshipsController < ApplicationController
 
   def are_friends?
     current_user == @friendship.active_friend || current_user == @friendship.passive_friend
+  end
+
+  def delete_request
+    @request = FriendRequest.where(["requester_id = ? and requestee_id = ?", params[:active_friend_id], current_user.id]).first
+    @request.destroy
   end
 end
