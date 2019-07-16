@@ -7,7 +7,9 @@
   	<% @requestees.each do |requestee| %>
   		<% @request = FriendRequest.where(["requester_id = ? and requestee_id = ?", current_user.id, requestee.id]).pluck(:id).first %>
   		<%= render 'requests/sent_requests/single_request', user: requestee, request: @request %>
-  		<hr class="my-3">
+  		<% if requestee != @requestees.last %>
+  			<hr class="my-3">
+  		<% end %>
   	<% end %>
     
   </div>
