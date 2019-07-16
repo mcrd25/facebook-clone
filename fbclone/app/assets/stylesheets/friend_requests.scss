@@ -1,3 +1,68 @@
 // Place all the styles related to the FriendRequests controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.card-head {
+	border-bottom: 1px solid gray;
+	position: sticky;
+	top: 2px;
+}
+
+.card-head h2 {
+	font-size: 16px;
+}
+
+.requests {
+	width: 65%;
+}
+
+.request-link {
+	font-size: 11px;
+	color: $blue3;
+}
+
+.request-link:hover {
+	color: $blue3;
+}
+
+.request-block {
+	width: 100%;
+}
+.request-details-block {
+	width: 100%;
+}
+
+.request-img-wrapper {
+	background-color: $blue3;
+	height: 75px;
+	width: 85px;
+}
+
+
+.request-name {
+	color: $blue3;
+	font-size: 18px;
+	font-weight: 600;
+}
+.confirm-request, .delete-request {
+	font-size: 12px;
+}
+.confirm-request {
+	background-color: $blue2;
+	color: #fff;
+}
+
+.confirm-request:hover {
+	background-color: $blue3;
+	color: #fff;
+}
+
+.delete-request {
+	background-color: #fff;
+  border-color: #ccd0d5;
+  color: #4b4f56;
+}
+
+.delete-request:hover {
+	background-color: #ccd0d5;
+}
