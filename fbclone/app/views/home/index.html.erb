@@ -1,9 +1,28 @@
-<h1>
-	Home Content
-</h1>
-
-<section>
-    <% if @posts.any?%>
-      <%= render 'posts/index' %>
+<div class="row pt-0 mt-0">
+  <div class="col-md-12">
+    <div class="card">
+      <h6 class="card-header">Create Post</h6>
+      <div class="card-body d-flex">
+        <div class="mr-2">Avatar</div>
+        <div class="ml-2 d-flex">
+          <input type="text-area" class="form-control", placeholder="What's on your mind?">
+          <button type="submit" class="btn btn-primary">Post</button>
+        </div>
+      </div>
+    </div>
+    <% if current_user.home_posts %>
+      <% current_user.home_posts.each do |p| %>
+    <div class="card">
+      <div class="card-body d-flex flex-column">
+        <div class="post-owner">
+          <%= p.user.full_name %>
+        </div>
+        <div class="post-message">
+          <%= p.message %>
+        </div>
+      </div>
+    </div>
+      <% end %>
     <% end %>
- </section>
+  </div>
+</div>
