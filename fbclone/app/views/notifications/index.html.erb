@@ -1,1 +1,14 @@
-<h1>Notifications</h1>
+<section class="px-5 mx-3">
+	<h1>
+		Your Notifications
+	</h1>
+	<hr>
+	<% @notifications.each do |notification| %>
+	
+		<%= render 'single', notification: notification %>
+		<% if notification != @notifications.last %>
+      <hr class="my-3">
+    <% end %>
+	<% end %>
+</section>
+
