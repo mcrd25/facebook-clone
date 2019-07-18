@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
 	before_action :set_user
 	
-	before_action only: [:show]
+	before_action only: [:show] do
 		set_source('profile')
 	end
 

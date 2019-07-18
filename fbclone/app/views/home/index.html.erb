@@ -1,24 +1,37 @@
-<div class="row pt-0 mt-0">
-  <div class="col-md-12">
-    <div class="card">
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="card mb-3">
       <h6 class="card-header">Create Post</h6>
       <div class="card-body d-flex">
-        <div class="mr-2 post-img">
-          <%= gravatar_for(current_user, 'post-img img-fluid') %>
+        <div class="col-md-2">
+          <%= gravatar_for(current_user, 'post-img img-fluid gravatar-wrap') %>
         </div>
-        <div class="ml-2 d-flex">
+        <div class=" col-md-10 d-flex">
           <%= render 'posts/partials/form' %>
         </div>
       </div>
     </div>
     <% if current_user.home_posts %>
       <% current_user.home_posts.each do |p| %>
-    <div class="card">
+    <div class="card mb-3">
       <div class="card-body d-flex flex-column">
-        <div class="post-owner">
-          <%= p.user.full_name %>
+        <div class="row post-header border-bottom">
+          <div class="col-md-2 gravatar-wrap">
+            <%= gravatar_for(current_user, 'post-img img-fluid gravatar-wrap') %>
+          </div>
+          <div class="col-md-10 name-time">
+            <div class="name">
+              <div class="text-primary">
+                <%= link_to "#{p.user.full_name}".html_safe, profile_path(User.find(p.user_id).username) %>
+              </div>              
+            </div>
+            <div class="published">
+              <p class="text-muted"><%= "#{time_ago_in_words(p.created_at.to_time)} ago".html_safe %></p>
+            </div>
+          </div>
         </div>
-        <div class="post-message">
+        <div class="post-message mt-3">
           <%= p.message %>
         </div>
       </div>
@@ -26,4 +39,5 @@
       <% end %>
     <% end %>
   </div>
+  <div class="col-md-2"></div>
 </div>
