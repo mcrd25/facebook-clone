@@ -2,6 +2,7 @@ class ProfilesController < ApplicationController
 	before_action :set_user
 
   def show 
+    session[:source] = 'profile'
   end
 
   def edit

@@ -24,6 +24,7 @@ class PostsController < ApplicationController
         render :new
       end
     else
+      puts session[:foo]
       redirect_to profile_posts_path
     end
   end
