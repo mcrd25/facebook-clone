@@ -3,7 +3,9 @@
     <div class="card">
       <h6 class="card-header">Create Post</h6>
       <div class="card-body d-flex">
-        <div class="mr-2">Avatar</div>
+        <div class="mr-2 post-img">
+          <%= gravatar_for(current_user, 'post-img img-fluid') %>
+        </div>
         <div class="ml-2 d-flex">
           <%= render 'posts/partials/form' %>
         </div>
