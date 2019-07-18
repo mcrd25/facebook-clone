@@ -19,12 +19,15 @@ class PostsController < ApplicationController
       @post = Post.new(post_params)
       @post.user_id = current_user.id
       if @post.save
-        redirect_to profile_posts_path
+        if session[:source] == 'home'
+          redirect_to root_path
+        else
+          redirect_to profile_posts_path
+        end
       else
         render :new
       end
     else
-      puts session[:foo]
       redirect_to profile_posts_path
     end
   end

@@ -1,8 +1,11 @@
 class ProfilesController < ApplicationController
 	before_action :set_user
+	
+	before_action only: [:show]
+		set_source('profile')
+	end
 
   def show 
-    session[:source] = 'profile'
   end
 
   def edit
