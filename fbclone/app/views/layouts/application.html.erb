@@ -15,10 +15,11 @@
     <% else %>
       <%= render 'layouts/partials/logged_out_header' %>
     <% end %>
-    <div class="container">
+    <main class="container">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <%= yield %>
-    </div>
+    </main>
+    <%= render 'layouts/partials/footer' %>
   </body>
 </html>
