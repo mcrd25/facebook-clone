@@ -68,9 +68,14 @@ footer {
 
 .gravatar-wrap {
   height: 3rem;
+  min-width: 3rem;
   border-radius: 50%;
 }
 
 .card-header {
   font-size: 0.9rem !important;
+}
+
+.comment-row {
+  flex-wrap: nowrap !important; 
 }
