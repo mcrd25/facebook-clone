@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="post-message mt-4">
+        <div class="post-message mt-3">
           <%= post.message %>
         </div>
         <div class="interaction-count d-flex justify-content-between text-muted mt-2">
@@ -45,7 +45,7 @@
             <%= link_to 'Like', profile_post_likes_path(post_id: post.id, 
                                                         user_id: current_user.id,
                                                         username: current_user.username), 
-                               class: 'btn btn-primary btn-block mx-2', 
+                               class: 'btn btn-primary btn-block mx-3', 
                                method: :post %>
           <% else %>
             <%= link_to 'Unlike', profile_post_like_path(post_id: post.id, 
@@ -80,7 +80,7 @@
             <% end %>
           </div>
         </div>
-        <div class="row border-bottom my-2"></div>
+        <div class="row border-bottom mt-2 mb-3"></div>
         <% end %>
         <%= render 'comments/partials/form', post_id: post.id %>
       </div>
