@@ -9,7 +9,7 @@ class LikesController < ApplicationController
       if session[:source] == 'home'
         redirect_to root_path
       else
-        redirect_to profile_posts_path
+        redirect_to profile_path
       end
     end 
   end
