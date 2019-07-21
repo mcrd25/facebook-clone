@@ -8,7 +8,7 @@
 		else
 			@like = Like.find(notification.notifiable_id)
 			@user = User.find(@like.user_id)
-			@post = User.find(@like.post_id)
+			@post = Post.find(@like.post_id)
 			message = "<b>#{@user.full_name}</b> liked your post #{time_word} ago".html_safe
 		end %>
 	<%= link_to profile_post_path(current_user.username, @post.id), class: 'nav-link' do %>
