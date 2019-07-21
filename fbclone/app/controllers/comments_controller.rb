@@ -7,6 +7,12 @@ class CommentsController < ApplicationController
       @comment.user_id = current_user.id
       @comment.post_id = params[:post_id]
       if @comment.save
+        if session[:source] == 'home'
+          redirect_to root_path
+        else
+          redirect_to profile_posts_path
+        end
+
         # appropriate flash message should be rendered
       else
         redirect_to profile_posts_path
@@ -31,8 +37,14 @@ class CommentsController < ApplicationController
   def destroy
     if is_comment_owner? && @comment.destroy
       # corresponding flash message for view
+      if session[:source] == 'home'
+        redirect_to root_path 
+      else
+        redirect_to profile_posts_path
+      end
+    else
+      redirect_to profile_posts_path
     end
-    redirect_to profile_posts_path
   end
 
   private 
