@@ -3,12 +3,14 @@
     <div class="d-flex justify-content-between">
       <div class="d-flex align-items-center">
         <span class="mr-2">
-          <i class="fas fa-mask fa-2x"></i>
+          <%= fas_icon "theater-masks", size: "2x" %>
         </span>
         <div class="input-group">
           <input type="search" class="form-control nav-search" placeholder="Search" aria-label="Search" aria-describedby="search-icon">
           <div id="search-append" class="input-group-append">
-            <span class="input-group-text" id="search-icon"><i class="fas fa-search"></i></span>
+            <span class="input-group-text" id="search-icon">
+              <%= fas_icon "search" %>
+            </span>
           </div>
         </div>
       </div>
@@ -27,12 +29,12 @@
         <% end %>
         <%= link_to requests_received_requests_path, class: 'nav-link' do %>
           <span class="nav-text">
-            <i class="fas fa-user-friends"></i>
+            <%= fas_icon "user-friends" %>
           </span>
         <% end %>
         <%= link_to notifications_path, class: 'nav-link' do %>
           <span class="nav-text">
-            <i class="fas fa-bell"></i>
+            <%= fas_icon "bell" %>
           </span>
         <% end %>
 
