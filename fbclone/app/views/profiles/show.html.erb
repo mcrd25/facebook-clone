@@ -13,7 +13,7 @@
     <div class="card bg-light my-3 p-3">
       <%= render 'posts/partials/form' %>
     </div>
-    <% current_user.posts.each do |post| %>
+    <% User.find_by(username: params[:username]).posts.each do |post| %>
       <%= render 'posts/partials/posts', post: post %>
     <% end %>
   </div>
