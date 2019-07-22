@@ -1,19 +1,20 @@
 <% time = (Time.now - notification.created_at.to_time)/1.second
 	time_word = time_ago_in_words(Time.now - time)
 	if notification.notifiable_type == 'Comment'
-			@comment = Comment.find(notification.notifiable_id)
-			@user = User.find(@comment.user_id)
-			@post = User.find(@comment.post_id)
-			message = "<b>#{@user.full_name}</b> commented on your post #{time_word} ago".html_safe
-		else
-			@like = Like.find(notification.notifiable_id)
-			@user = User.find(@like.user_id)
-			@post = Post.find(@like.post_id)
-			message = "<b>#{@user.full_name}</b> liked your post #{time_word} ago".html_safe
-		end %>
-	<%= link_to profile_post_path(current_user.username, @post.id), class: 'nav-link' do %>
-    <%= gravatar_for(@user, 'img-fluid round-avatar') %>
-    <span  class="ml-1 notif-txt">
-      <%= message %>
-    </span>
-  <% end %>
+		@comment = Comment.find(notification.notifiable_id)
+		@user = User.find(@comment.user_id)
+		@post = Post.find(@comment.post_id)
+		message = "commented on your post #{time_word} ago.".html_safe
+	else
+		@like = Like.find(notification.notifiable_id)
+		@user = User.find(@like.user_id)
+		@post = Post.find(@like.post_id)
+		message = "liked your post #{time_word} ago.".html_safe
+	end %>
+<div class="mr-2">
+  <%= gravatar_for(@user, 'img-fluid gravatar-wrap') %>
+</div>
+<div class="d-flex align-items-center">
+  <%= link_to "#{current_user.full_name}", profile_path(current_user.username) %>
+  <%= link_to "#{message}", profile_post_path(current_user.username, @post.id), class: "notif-txt ml-1" %>
+</div>
