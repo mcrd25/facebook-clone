@@ -20,7 +20,7 @@
     </div>
     <% if post.user == current_user %>
       <%= link_to 'Edit post', edit_profile_post_path(post.id, username: current_user.username), class: "mt-2" %>
-      <%= link_to 'Delete post', profile_post_path(post.id, username: current_user.username), method: :delete, class: "mt-2" %>
+      <%= link_to 'Delete post', profile_post_path(post.id, username: current_user.username), data: { confirm: "Are you sure?" }, method: :delete, class: "mt-2" %>
     <% end %>
     <div class="interaction-count d-flex justify-content-between text-muted mt-2">
       <% if post.likes.count == 1 %>
