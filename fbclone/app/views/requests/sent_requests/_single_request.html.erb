@@ -7,7 +7,7 @@
 			<%=link_to user.full_name, profile_path(user.username), class: 'request-name' %>
 		</div>
 		<div class="ml-2 confirmation d-flex align-items-center">
-			<%=link_to 'Cancel Request', profile_friend_request_path(current_user.username, request),  class: 'btn delete-request ml-2',
+			<%=link_to 'Cancel Request', profile_friend_request_path(user.username, request),  class: 'btn delete-request ml-2',
           		method: :delete,
               data: { confirm: 'Are you sure?'} %>
 		</div>

@@ -9,7 +9,16 @@
           <%= link_to 'Edit profile', edit_profile_path(current_user.username) %>
         <% end %>
         <% if current_user && current_user.username != params[:username] %>
-          <%= link_to 'Send Friend Request',profile_friend_requests_path ,class: "btn btn-primary" %>
+          <% if current_user.sent_requests.include?(@user) %>
+          <% friend_requests = FriendRequest.where(requester: current_user, requestee: @user) 
+            request = friend_requests[0]
+          %>
+            <%=link_to 'Cancel Request', profile_friend_request_path(@user.username, request),  class: 'btn delete-request ml-2',
+              method: :delete,
+              data: { confirm: 'Are you sure?'} %>
+          <% else %>
+            <%= link_to 'Send Friend Request',profile_friend_requests_path, method: :post, class: "btn btn-primary" %>
+          <% end %>
         <% end %>
       </div>
     </div>
