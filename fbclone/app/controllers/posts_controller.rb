@@ -1,10 +1,5 @@
 class PostsController < ApplicationController
   before_action :set_post, except: [:new, :create]
-  before_action :set_user, only: [:index]
-	
-  def index
-    @posts = @user.posts.order(created_at: :desc) if params[:username]
-  end
 
   def show
     redirect_to profile_posts_path if not_signed_in?

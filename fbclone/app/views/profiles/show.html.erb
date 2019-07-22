@@ -23,7 +23,9 @@
       </div>
     </div>
     <div class="card bg-light my-3 p-3">
-      <%= render 'posts/partials/form' %>
+      <% if current_user.username == params[:username] %>
+        <%= render 'posts/partials/form' %>
+      <% end %>
     </div>
     <% @profile_posts.each do |post| %>
       <%= render 'posts/partials/posts', post: post %>

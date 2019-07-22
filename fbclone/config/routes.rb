@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :notifications, only: [:index]
 
   resource :profile, only: [:show, :edit], path: '/:username' do 
-    resources :posts do
+    resources :posts, except: [:index] do
       resources :likes, only: [:create, :destroy]
       resources :comments, only: [:create, :edit, :update, :destroy]
     end
@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   end
 
   namespace :requests do
-	 resources :sent_requests
-	 resources :received_requests
+	 resources :sent_requests, only: [:index]
+	 resources :received_requests, only: [:index]
 	end
 
   resources :friendships, only: [:create, :destroy]
