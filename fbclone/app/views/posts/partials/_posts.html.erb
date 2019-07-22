@@ -23,8 +23,16 @@
       <%= link_to 'Delete post', profile_post_path(post.id, username: current_user.username), method: :delete, class: "mt-2" %>
     <% end %>
     <div class="interaction-count d-flex justify-content-between text-muted mt-2">
-      <p><%= pluralize(post.likes.count, 'Like').html_safe %></p>
-      <p><%= pluralize(post.comments.count, 'Comments').html_safe %></p>
+      <% if post.likes.count == 1 %>
+        <p><%= pluralize(post.likes.count, 'Like').html_safe %></p>
+      <% else %>
+        <p><%= pluralize(post.likes.count, 'Likes').html_safe %></p>
+      <% end %>
+      <% if post.comments.count == 1 %>
+        <p><%= pluralize(post.comments.count, 'Comment').html_safe %></p>
+      <% else %>
+        <p><%= pluralize(post.comments.count, 'Comments').html_safe %></p>
+      <% end %>
     </div>
     <div class="row border-bottom mb-2"></div>
     <div class="row my-2">

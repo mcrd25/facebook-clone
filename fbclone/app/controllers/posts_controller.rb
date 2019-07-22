@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :set_user, only: [:index]
 	
   def index
-    @posts = @user.posts if params[:username]
+    @posts = @user.posts.order(created_at: :desc) if params[:username]
   end
 
   def show
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
 
   def edit 
     if not_post_owner? && not_signed_in?
-      redirect_to profile_posts_path
+      redirect_to profile_path
     elsif not_post_owner?
       redirect_to profile_post_path
     end
@@ -42,7 +42,11 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to profile_posts_path
+      if session[:source] == 'home'
+        redirect_to root_path
+      else
+        redirect_to profile_path
+      end
     else
       render :edit
     end
@@ -51,9 +55,12 @@ class PostsController < ApplicationController
 
   def destroy
     if post_owner? && @post.destroy
-      # corresponding flash message for view
+      if session[:source] == 'home'
+        redirect_to root_path
+      else
+        redirect_to profile_path
+      end
     end
-    redirect_to profile_posts_path
   end
 
   private 

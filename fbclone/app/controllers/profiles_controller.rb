@@ -6,6 +6,7 @@ class ProfilesController < ApplicationController
 	end
 
   def show 
+    @profile_posts = User.find_by(username: params[:username]).posts.order(created_at: :desc)
   end
 
   def edit

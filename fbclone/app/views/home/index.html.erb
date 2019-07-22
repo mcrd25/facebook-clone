@@ -12,8 +12,8 @@
         </div>
       </div>
     </div>
-    <% if current_user.home_posts %>
-      <% current_user.home_posts.each do |post| %>
+    <% if @posts %>
+      <% @posts.each do |post| %>
         <%= render 'posts/partials/posts', post: post %>
       <% end %>
     <% end %>
