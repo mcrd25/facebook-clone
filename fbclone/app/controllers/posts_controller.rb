@@ -42,13 +42,12 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post updated successfully'
     else 
       flash[:alert] = 'Post could not be updated'
-    end
-      if session[:source] == 'home'
-        redirect_to root_path
-      else
-        redirect_to profile_path
-      end
       render :edit
+    end
+    if session[:source] == 'home'
+      redirect_to root_path
+    else
+      redirect_to profile_path
     end
   end
 
