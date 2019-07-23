@@ -28,14 +28,20 @@
           </span>
         <% end %>
         <%= link_to requests_received_requests_path, class: 'nav-link' do %>
-          <span class="nav-text">
+          <div id="requests_icon" class="nav-text">
             <%= fas_icon "user-friends" %>
-          </span>
+            <% if user_received_request_count > 0 %>
+              <span class="notif_badge"><%= user_received_request_count %></span>
+            <% end %>
+          </div>
         <% end %>
         <%= link_to notifications_path, class: 'nav-link' do %>
-          <span class="nav-text">
+          <div id="notification_bell" class="nav-text">
             <%= fas_icon "bell" %>
-          </span>
+            <% if user_notification_count > 0 %>
+              <span class="notif_badge"><%= user_notification_count %></span>
+            <% end %>
+          </div>
         <% end %>
 
         <div class="btn-group">

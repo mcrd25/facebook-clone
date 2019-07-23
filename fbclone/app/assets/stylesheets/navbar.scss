@@ -67,3 +67,22 @@
 	height: 30px;
 	width: 30px;
 }
+
+#notification_bell, #requests_icon {
+	position: relative;
+}
+
+.notif_badge {
+  background-color: #fa3e3e;
+  border-radius: 100%;
+  color: white;
+  padding: 2px;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.nav-text .fas {
+	font-size: 22px;
+}
