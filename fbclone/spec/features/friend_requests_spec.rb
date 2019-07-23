@@ -27,6 +27,32 @@ RSpec.feature "FriendRequests", type: :feature do
     expect(page).to have_content("#{friend_request.requester.full_name}")
   end
 
+  scenario "user accepts new received request" do 
+    user_sign_in
+    friend_request.requestee = user 
+    friend_request.requester = stranger 
+    friend_request.save 
+
+    visit("/requests/received_requests")
+
+    expect {
+      click_link("Confirm")
+    }.to change(Friendship, :count).by(1)
+  end
+
+  scenario "user accepts new received request" do 
+    user_sign_in
+    friend_request.requestee = user 
+    friend_request.requester = stranger 
+    friend_request.save 
+
+    visit("/requests/received_requests")
+
+    expect {
+      click_link("Delete Request")
+    }.to change(FriendRequest, :count).by(-1)
+  end
+
   scenario "user sees new sent_request" do 
     user_sign_in
     friend_request.requester = user 

@@ -89,17 +89,6 @@ RSpec.feature "Homes", type: :feature do
     expect(page).to have_content updated_mssg      
   end
 
-  scenario "user deletes created post" do 
-    user_sign_in
-
-    post.save
-    created_post = "/#{user.username}/posts/#{post.id}"
-    visit root_path
-
-    expect { 
-      find_link(href: created_post).click() 
-    }.to change(Post, :count).by(-1)
-  end
 
   scenario "user likes a post" do 
     user_sign_in
@@ -133,16 +122,13 @@ RSpec.feature "Homes", type: :feature do
     
     post.save
     created_post = "/#{user.username}/posts/#{post.id}/comments"
-    p created_post
 
     visit root_path
 
-    within created_post do 
-      fill_in "comment_message", with: comment.message 
-      click_button "Comment"
-    end
+    fill_in("comment_message", with: comment.message)
 
     expect {
+      click_button "Comment"
       expect(page).to have_content(comment.message)
     }.to change(Comment, :count).by(1)
   end

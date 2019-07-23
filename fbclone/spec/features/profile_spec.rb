@@ -16,4 +16,14 @@ RSpec.feature "Profiles", type: :feature do
 
     expect(page).to have_content("Your account has been updated successfully.")
   end
+
+  scenario "user deletes account" do 
+    sign_in user 
+
+    visit edit_profile_path(user.username)
+
+    expect {
+      click_button("Delete my account")
+    }.to change(User, :count).by(-1)
+  end
 end
