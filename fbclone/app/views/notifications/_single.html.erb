@@ -15,6 +15,6 @@
   <%= gravatar_for(@user, 'img-fluid gravatar-wrap') %>
 </div>
 <div class="d-flex align-items-center">
-  <%= link_to "#{current_user.full_name}", profile_path(current_user.username) %>
+  <%= link_to "#{@user.full_name}", profile_path(@user.username) %>
   <%= link_to "#{message}", profile_post_path(current_user.username, @post.id), class: "notif-txt ml-1" %>
 </div>
