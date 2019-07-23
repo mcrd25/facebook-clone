@@ -9,7 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       # session["devise.facebook_data"] = request.env["omniauth.auth"]
       redirect_to root_path
-      set_flash_message(:notice, :failure, kind: "Facebook", reason: "you need to sign up")
+      set_flash_message(:alert, :failure, kind: "Facebook", reason: "you need to sign up")
     end
   end
 
