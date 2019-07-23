@@ -48,7 +48,6 @@ class PostsController < ApplicationController
       else
         redirect_to profile_path
       end
-    else
       render :edit
     end
   end
