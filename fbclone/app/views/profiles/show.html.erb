@@ -8,6 +8,7 @@
         <% if current_user.username == params[:username] %>
           <%= link_to 'Edit profile', edit_profile_path(current_user.username) %>
         <% end %>
+        <%= link_to 'View Friends', profile_friends_path(@user.username) %>
         <% if current_user && current_user.username != params[:username] %>
           <% if !current_user.friends.include?(@user) %>
             <% if current_user.sent_requests.include?(@user) %>

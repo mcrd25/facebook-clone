@@ -1,1 +1,32 @@
-<h1>Friends Index</h1>
+<div class="row">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div class="card-bg-light border">
+			<h1 class="card-header border-bottom">
+				<% if current_user == @user %>
+					<%= "Your Friends" %>
+				<% else %>
+					<%= "#{@user.first_name}'s Friends" %>
+				<% end %>
+			</h1>
+			<div class="card-body d-flex flex-column">
+				<% @friends.each do |friend| %>
+          <div class="request-block d-flex">
+						<div class="request-img-wrapper">
+							<%= gravatar_for(friend, 'request-img img-fluid') %>
+						</div>
+						<div class="pl-3 d-flex justify-content-between request-details-block">
+							<div class="request-details d-flex">
+								<%=link_to friend.full_name, profile_path(friend.username), class: 'request-name' %>
+							</div>
+						</div>
+					</div>
+          <% if friend != @friends.last %>
+            <hr class="my-3">
+          <% end %>
+        <% end %>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2"></div>
+</div>
