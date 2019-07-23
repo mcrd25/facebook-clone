@@ -2,11 +2,11 @@ class PostsController < ApplicationController
   before_action :set_post, except: [:new, :create]
 
   def show
-    redirect_to profile_posts_path if not_signed_in?
+    redirect_to profile_path if not_signed_in?
   end
 
   def new 
-    redirect_to profile_posts_path if not_signed_in?
+    redirect_to profile_path if not_signed_in?
   end
 
   def create
@@ -14,16 +14,18 @@ class PostsController < ApplicationController
       @post = Post.new(post_params)
       @post.user_id = current_user.id
       if @post.save
+        flash[:notice] = 'Post created successfully'
         if session[:source] == 'home'
           redirect_to root_path
         else
           redirect_to profile_path
         end
       else
+        flash[:alert] = 'Post could not be created'
         render :new
       end
     else
-      redirect_to profile_posts_path
+      redirect_to profile_path
     end
   end
 
@@ -37,6 +39,10 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
+      flash[:notice] = 'Post updated successfully'
+    else 
+      flash[:alert] = 'Post could not be updated'
+    end
       if session[:source] == 'home'
         redirect_to root_path
       else
@@ -50,11 +56,14 @@ class PostsController < ApplicationController
 
   def destroy
     if post_owner? && @post.destroy
-      if session[:source] == 'home'
-        redirect_to root_path
-      else
-        redirect_to profile_path
-      end
+      flash[:notice] = 'Post deleted successfully'
+    else 
+      flash[:alert] = 'Post could not be deleted'
+    end
+    if session[:source] == 'home'
+      redirect_to root_path
+    else
+      redirect_to profile_path
     end
   end
 

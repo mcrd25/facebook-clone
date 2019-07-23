@@ -106,10 +106,10 @@ RSpec.describe CommentsController, type: :controller do
 
       context 'when authorised' do 
 
-        it 'responds http status success' do 
+        it 'redirects to creation page when successfully create post comment' do 
           comment_params = FactoryBot.attributes_for(:comment)
           post :create, params: {username: user.username, post_id: commented_post.id, comment: comment_params }
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(:redirect)
         end
 
         it 'creates a post comment' do 

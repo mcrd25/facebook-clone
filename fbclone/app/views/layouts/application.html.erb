@@ -16,8 +16,12 @@
       <%= render 'layouts/partials/logged_out_header' %>
     <% end %>
     <main class="container">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <% if notice %>
+        <p class="notice alert alert-success"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert alert-danger"><%= alert %></p>
+      <% end %>
       <%= yield %>
     </main>
     <%= render 'layouts/partials/footer' %>
