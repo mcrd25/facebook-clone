@@ -1,0 +1,83 @@
+<div class="card mb-3 bg-light">
+  <div class="card-body d-flex flex-column">
+    <div class="row post-header border-bottom">
+      <div class="gravatar-wrap ml-2">
+        <%= gravatar_for(post.user, 'post-img img-fluid gravatar-wrap') %>
+      </div>
+      <div class="name-time ml-2">
+        <div class="name">
+          <div class="text-primary">
+            <%= link_to "#{post.user.full_name}".html_safe, profile_path(User.find(post.user_id).username) %>
+          </div>              
+        </div>
+        <div class="published">
+          <p class="text-muted"><%= "#{time_ago_in_words(post.created_at.to_time)} ago".html_safe %></p>
+        </div>
+      </div>
+    </div>
+    <div class="post-message mt-3">
+      <%= post.message %>
+    </div>
+    <% if post.user == current_user %>
+      <%= link_to 'Edit post', edit_profile_post_path(post.id, username: current_user.username), class: "mt-2" %>
+      <%= link_to 'Delete post', profile_post_path(post.id, username: current_user.username), data: { confirm: "Are you sure?" }, method: :delete, class: "mt-2" %>
+    <% end %>
+    <div class="interaction-count d-flex justify-content-between text-muted mt-2">
+      <% if post.likes.count == 1 %>
+        <p><%= pluralize(post.likes.count, 'Like').html_safe %></p>
+      <% else %>
+        <p><%= pluralize(post.likes.count, 'Likes').html_safe %></p>
+      <% end %>
+      <% if post.comments.count == 1 %>
+        <p><%= pluralize(post.comments.count, 'Comment').html_safe %></p>
+      <% else %>
+        <p><%= pluralize(post.comments.count, 'Comments').html_safe %></p>
+      <% end %>
+    </div>
+    <div class="row border-bottom mb-2"></div>
+    <div class="row my-2">
+      <% current_like = post.likes.find_by(user_id: current_user.id) %>
+      <% if current_like.nil? %>
+        <%= link_to 'Like', profile_post_likes_path(post_id: post.id, 
+                                                    user_id: current_user.id,
+                                                    username: current_user.username), 
+                           class: 'btn btn-primary btn-block mx-3 like-button', 
+                           method: :post %>
+      <% else %>
+        <%= link_to 'Unlike', profile_post_like_path(post_id: post.id, 
+                                                    user_id: current_user.id,
+                                                    username: current_user.username,
+                                                    id: current_like.id), 
+                           class: 'btn btn-primary btn-block mx-2 unlike-button', 
+                           method: :delete %>
+      <% end %>
+    </div>
+    <div class="row border-bottom my-2"></div>
+    <% post.comments.each do |c| %>
+    <div class="row d-flex no-gutters my-2 comment-row">
+      <div class="gravatar-wrap ml-2">
+        <%= gravatar_for(c.user, 'post-img img-fluid gravatar-wrap') %>
+      </div>
+      <div class="comment-details flex-column ml-2">
+        <div class="comment">
+          <%= link_to "#{c.user.full_name}", profile_path(c.user.username) %>
+          <%= "#{c.message}".html_safe %>
+        </div>
+        <div class="comment-time text-muted">
+          <%= "#{time_ago_in_words(c.created_at.to_time)} ago".html_safe %>
+        </div>
+        <% if c.user_id == current_user.id %>
+        <% current_comment = post.comments.find_by(user_id: c.id) %>
+        <%= link_to 'Delete comment', profile_post_comment_path(post_id: post.id, 
+                                                    user_id: c.user.id,
+                                                    username: c.user.username,
+                                                    id: c.id), 
+                                        method: :delete %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row border-bottom mt-2 mb-3"></div>
+    <% end %>
+    <%= render 'comments/partials/form', post_id: post.id %>
+  </div>
+</div>

@@ -8,55 +8,6 @@ RSpec.describe PostsController, type: :controller do
   let(:other_post) { FactoryBot.create(:post, user: other) }
 
 
-  describe 'GET index' do 
-
-    context 'when user is logged in' do 
-
-      before do 
-        sign_in a_user
-        get :index, params: { username: a_user.username }
-      end
-
-      it 'responds succesfully' do 
-        expect(response).to be_successful
-      end
-
-      it 'responds with 200' do
-        expect(response).to have_http_status '200'
-      end
-
-      it 'does not respond with 404' do
-        expect(response).to_not have_http_status '404'
-      end
-
-      it 'renders :index template' do
-        expect(response).to render_template(:index)
-      end 
-    end
-
-    context 'when user is NOT logged in' do 
-
-      before do 
-        get :index, params: { username: a_user.username }
-      end
-
-      it 'responds succesfully' do 
-        expect(response).to be_successful
-      end
-
-      it 'responds with 200' do
-        expect(response).to have_http_status '200'
-      end
-
-      it 'does not respond with 404' do
-        expect(response).to_not have_http_status '404'
-      end
-
-      it 'renders :index template' do
-        expect(response).to render_template(:index)
-      end 
-    end
-  end
 
   describe 'GET show' do 
 
@@ -91,7 +42,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'redirects to profile_posts_path' do 
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
   end
@@ -156,7 +107,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'redirects to :index' do 
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
   end
@@ -179,7 +130,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'redirects to profile_posts_path' do
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
 
@@ -196,7 +147,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'redirects to profile_posts_path' do
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
   end
@@ -236,7 +187,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'redirects to profile_posts_path' do 
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
   end
@@ -263,7 +214,7 @@ RSpec.describe PostsController, type: :controller do
         it 'redirects to profile_posts_path after create' do
           post_params = FactoryBot.attributes_for(:post)
           post :create, params: { username: a_user.username, post: post_params }
-          expect(response).to redirect_to(profile_posts_path)
+          expect(response).to redirect_to(profile_path)
         end
       end
 
@@ -276,7 +227,7 @@ RSpec.describe PostsController, type: :controller do
         it 'redirects to profile_posts_path' do
           post_params = FactoryBot.attributes_for(:post, user_id: other.id)
           post :create, params: { username: other.username, post: post_params }
-          expect(response).to redirect_to(profile_posts_path)
+          expect(response).to redirect_to(profile_path)
         end
       end
     end
@@ -296,7 +247,7 @@ RSpec.describe PostsController, type: :controller do
       it 'redirects to profile_posts_path' do
         post_params = FactoryBot.attributes_for(:post)
         post :create, params: { username: a_user.username, post: post_params }
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
   end
@@ -321,7 +272,7 @@ RSpec.describe PostsController, type: :controller do
 
         it 'redirects to profile_posts_path' do
           delete :destroy, params: { username: other_user.username, id: one_post.id }
-          expect(response).to redirect_to(profile_posts_path)
+          expect(response).to redirect_to(profile_path)
         end
       end
 
@@ -347,7 +298,7 @@ RSpec.describe PostsController, type: :controller do
       it 'redirects to profile_posts_path' do
         post_params = FactoryBot.attributes_for(:post)
         delete :destroy, params: { username: another_user.username, id: deleted_post.id }
-        expect(response).to redirect_to(profile_posts_path)
+        expect(response).to redirect_to(profile_path)
       end
     end
   end

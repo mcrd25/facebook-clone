@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="bg-light card">
+      <div class="d-flex flex-column align-items-center justify-content-between py-4">
+        <%= gravatar_for(current_user, 'post-img img-fluid') %>
+        <h1 class="my-2 strong">Edit Profile</h1> 
+      </div>
+    </div>
+    <div class="card bg-light my-3 p-3">
+      <%= render 'devise/registrations/edit_form' %>
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+</div>

@@ -1,17 +1,12 @@
 class PostsController < ApplicationController
   before_action :set_post, except: [:new, :create]
-  before_action :set_user, only: [:index]
-	
-  def index
-    @posts = @user.posts if params[:username]
-  end
 
   def show
-    redirect_to profile_posts_path if not_signed_in?
+    redirect_to profile_path if not_signed_in?
   end
 
   def new 
-    redirect_to profile_posts_path if not_signed_in?
+    redirect_to profile_path if not_signed_in?
   end
 
   def create
@@ -19,18 +14,24 @@ class PostsController < ApplicationController
       @post = Post.new(post_params)
       @post.user_id = current_user.id
       if @post.save
-        redirect_to profile_posts_path
+        flash[:notice] = 'Post created successfully'
+        if session[:source] == 'home'
+          redirect_to root_path
+        else
+          redirect_to profile_path
+        end
       else
+        flash[:alert] = 'Post could not be created'
         render :new
       end
     else
-      redirect_to profile_posts_path
+      redirect_to profile_path
     end
   end
 
   def edit 
     if not_post_owner? && not_signed_in?
-      redirect_to profile_posts_path
+      redirect_to profile_path
     elsif not_post_owner?
       redirect_to profile_post_path
     end
@@ -38,18 +39,30 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to profile_posts_path
-    else
+      flash[:notice] = 'Post updated successfully'
+    else 
+      flash[:alert] = 'Post could not be updated'
       render :edit
+    end
+    if session[:source] == 'home'
+      redirect_to root_path
+    else
+      redirect_to profile_path
     end
   end
 
 
   def destroy
     if post_owner? && @post.destroy
-      # corresponding flash message for view
+      flash[:notice] = 'Post deleted successfully'
+    else 
+      flash[:alert] = 'Post could not be deleted'
     end
-    redirect_to profile_posts_path
+    if session[:source] == 'home'
+      redirect_to root_path
+    else
+      redirect_to profile_path
+    end
   end
 
   private 

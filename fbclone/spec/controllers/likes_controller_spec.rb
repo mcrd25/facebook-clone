@@ -24,9 +24,9 @@ RSpec.describe LikesController, type: :controller do
 
       context 'when authorised' do 
 
-        it 'responds http status success' do 
+        it 'redirects to creation page when successfully create post like' do 
           post :create, params: { username: user.username, post_id: liked_post.id } 
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(:redirect)
         end
 
         it 'creates a post like' do 

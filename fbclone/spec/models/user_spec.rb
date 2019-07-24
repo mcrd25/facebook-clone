@@ -9,9 +9,11 @@
 #  first_name             :string
 #  gender                 :string
 #  last_name              :string
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  uid                    :string
 #  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

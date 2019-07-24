@@ -1,3 +1,39 @@
-<h1>
-	<%= @user.full_name %>
-</h1>
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="bg-light card" id="profile-header">
+      <div class="d-flex flex-column align-items-center justify-content-between py-4">
+        <%= gravatar_for(@user, 'post-img img-fluid') %>
+        <h1 class="my-2 strong"><%= @user.full_name %></h1> 
+        <% if current_user.username == params[:username] %>
+          <%= link_to 'Edit profile', edit_profile_path(current_user.username) %>
+        <% end %>
+        <%= link_to 'View Friends', profile_friends_path(@user.username) %>
+        <% if current_user && current_user.username != params[:username] %>
+          <% if !current_user.friends.include?(@user) %>
+            <% if current_user.sent_requests.include?(@user) %>
+            <% friend_requests = FriendRequest.where(requester: current_user, requestee: @user) 
+              request = friend_requests[0] %>
+              <%=link_to 'Cancel Request', profile_friend_request_path(@user.username, request),  class: 'btn delete-request ml-2',
+                method: :delete,
+                data: { confirm: 'Are you sure?'} %>
+            <% elsif current_user.received_requests.include?(@user) %>
+              <%= link_to 'View Requests', requests_received_requests_path(current_user) %>
+            <% else %>
+              <%= link_to 'Send Friend Request', profile_friend_requests_path, method: :post, class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="card bg-light my-3 p-3">
+      <% if current_user.username == params[:username] %>
+        <%= render 'posts/partials/form' %>
+      <% end %>
+    </div>
+    <% @profile_posts.each do |post| %>
+      <%= render 'posts/partials/posts', post: post %>
+    <% end %>
+  </div>
+  <div class="col-sm-2"></div>
+</div>

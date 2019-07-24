@@ -6,11 +6,21 @@ class LikesController < ApplicationController
     if user_signed_in?
       @like = Like.new(post_id: params[:post_id], user: current_user)
       @like.save
+      if session[:source] == 'home'
+        redirect_to root_path
+      else
+        redirect_to profile_path
+      end
     end 
   end
 
   def destroy 
     @like.destroy if is_like_owner? && user_signed_in?
+    if session[:source] == 'home'
+      redirect_to root_path
+    else
+      redirect_to profile_posts_path
+    end
   end
 
   private

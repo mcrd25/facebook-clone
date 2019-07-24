@@ -1,0 +1,92 @@
+.brand-logo {
+	width: 170px;
+  height: 34px;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+#login-nav { 
+  height: 82px;
+}
+
+.nav-content {
+	width: 85%;
+}
+
+#main-nav {
+	height: 42px;
+}
+
+.login-submit {
+	border-color: #2A497F;
+	font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  background-color: #4565A1;
+  color: #fff;
+}
+
+.login-submit:hover {
+	background-color: #365899;
+}
+
+.login-field {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.nav-search, #search-append {
+	height: 23px;
+	line-height: 22px;
+	font-size: 14px;
+}
+
+.nav-search {
+	padding: 3px 5px;
+	border: none;
+	width: 388px !important;
+}
+
+.log-out {
+	color: #111;
+}
+
+.log-out:hover {
+	color: #fff;
+	background-color: $blue2;
+	text-decoration: none;
+}
+
+
+.nav-txt, .nav-link, .nav-link:hover {
+	color: #fff;
+}
+
+.fb-link:hover {
+  text-decoration: underline;
+}
+
+.round-avatar {
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+}
+
+#notification_bell, #requests_icon {
+	position: relative;
+}
+
+.notif_badge {
+  background-color: #fa3e3e;
+  border-radius: 100%;
+  color: white;
+  padding: 2px;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.nav-text .fas {
+	font-size: 22px;
+}
