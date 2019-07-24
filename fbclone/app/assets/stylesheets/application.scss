@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+ $blue: #3c5a99;
+ $blue2: #4267B2;
+ $blue3: #385898;
+
+@import 'font_awesome5_webfont';
+@import 'bootstrap';
+@import 'navbar';
+@import 'friend_requests';
+@import 'notifications';
+@import 'posts';
+
+.brand-bg {
+	background-color: $blue;
+	color: #fff;
+}
+
+.brand-bg2 {
+  background-color: $blue2;
+  color: #fff;
+}
+
+.p-left {
+  font-size: 17px;
+}
+
+#title-left {
+  font-size: 28px;
+}
+
+#title-right {
+  font-size: 36px;
+}
+
+#subtitle-right {
+  font-size: 16px;
+}
+
+.gender-labels {
+  font-size: 18px;
+}
+
+#terms {
+  font-size: 11px;
+}
+
+#promo-text {
+  font-size: 13px;
+}
+
+footer {
+  background-color: #fff;
+  color: #555;
+}
+
+.gravatar-wrap {
+  height: 3rem;
+  min-width: 3rem;
+  max-width: 3rem;
+  border-radius: 50%;
+}
+
+.card-header {
+  font-size: 0.9rem !important;
+}
+
+.comment-row {
+  flex-wrap: nowrap !important; 
+}

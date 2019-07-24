@@ -1,0 +1,57 @@
+<div class="brand-bg2 d-flex align-items-center" id="main-nav">
+  <div class="container nav-content">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex align-items-center">
+        <span class="mr-2">
+          <%= fas_icon "theater-masks", size: "2x" %>
+        </span>
+        <div class="input-group">
+          <input type="search" class="form-control nav-search" placeholder="Search" aria-label="Search" aria-describedby="search-icon">
+          <div id="search-append" class="input-group-append">
+            <span class="input-group-text" id="search-icon">
+              <%= fas_icon "search" %>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+
+        <%= link_to profile_path(current_user.username), class: 'nav-link' do %>
+          <%= gravatar_for(current_user, 'img-fluid round-avatar') %>
+          <span id="avatar" class="ml-1 nav-text">
+            <%= current_user.first_name %>
+          </span>
+        <% end %>
+        <%= link_to root_path, class: 'nav-link' do %>
+          <span class="nav-text">
+            Home
+          </span>
+        <% end %>
+        <%= link_to requests_received_requests_path, class: 'nav-link' do %>
+          <div id="requests_icon" class="nav-text">
+            <%= fas_icon "user-friends" %>
+            <% if user_received_request_count > 0 %>
+              <span class="notif_badge"><%= user_received_request_count %></span>
+            <% end %>
+          </div>
+        <% end %>
+        <%= link_to notifications_path, class: 'nav-link' do %>
+          <div id="notification_bell" class="nav-text">
+            <%= fas_icon "bell" %>
+            <% if user_notification_count > 0 %>
+              <span class="notif_badge"><%= user_notification_count %></span>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </a>
+          <div id="dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <%= link_to('Log Out', destroy_user_session_path, method: :delete, class: 'dropdown-item log-out') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

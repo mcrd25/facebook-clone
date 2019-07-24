@@ -1,0 +1,9 @@
+<%= form_with scope: :post, url: profile_posts_path(current_user.username) do |f| %>
+  <div class="form-group">
+    <%= f.text_area :message, placeholder: "What's on your mind, #{current_user.first_name}?", 
+                              class: 'form-control', cols: 100 %>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
+  </div>
+<% end %>

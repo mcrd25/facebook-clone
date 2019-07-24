@@ -98,4 +98,6 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 
+.gitignore
+
 # End of https://www.gitignore.io/api/rails,macos

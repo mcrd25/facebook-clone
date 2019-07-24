@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fbclone</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <%= render 'layouts/partials/header' %>
+    <% else %>
+      <%= render 'layouts/partials/logged_out_header' %>
+    <% end %>
+    <main class="container">
+      <% if notice %>
+        <p class="notice alert alert-success"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert alert-danger"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </main>
+    <%= render 'layouts/partials/footer' %>
+  </body>
+</html>
