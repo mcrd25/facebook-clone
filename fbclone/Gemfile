@@ -9,7 +9,7 @@ gem 'rails', '~> 5.2.3'
 gem 'pg', '>= 0.18', '< 2.0'
 
 # Use devise for authentication
-gem 'devise', '~> 4.6', '>= 4.6.2'
+gem 'devise', '~> 4.7'
 
 gem 'omniauth-facebook', '~> 5.0'
 
